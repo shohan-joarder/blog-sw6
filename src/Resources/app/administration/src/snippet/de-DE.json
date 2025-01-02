@@ -1,0 +1,54 @@
+{
+    "gisl": {
+        "general": {
+            "dailymotionLabel":"Dailymotion-Video",
+            "title": "Blog",
+            "titleLabel": "Titel",
+            "blogListing": "Blog Liste",
+            "description": "Blog hier verwalten",
+            "new":"Neu",
+            "save":"Speichern",
+            "update":"Aktualisieren",
+            "success":"Erfolg",
+            "error":"Fehler",
+            "common_error_message":"Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal",
+            "common_delete_message":"Artikel erfolgreich gelöscht!",
+            "paginationCount":"Anzahl der Paginierungen",
+            "sectionTitle":"Titel",
+            "allBlog": "Alle Blogs",
+            "buttonTitle":"Schaltflächentitel",
+            "cms":{
+                "blogTitle":"Blog Liste",
+                "blogListAlert":"Der Blogeintrag wird hier im Storefront gerendert",
+                "blogDetailsTitle":"Blogdetails",
+                "blogDetailsAlert":"Blogdetails wird hier im Storefront gerendert",
+                "blogCategoryTitle":"Blog-Kategorie",
+                "blogCategoryListAlert":"Die Auflistung der Blog-Kategorien wird hier in der Storefront gerendert",
+                "blogShortDescription":"Blog-Kurzbeschreibung",
+                "blogShortDescriptionAlert":"Die Blog-Kurzbeschreibung wird hier im Storefront gerendert",
+                "generalMessage":"Der Inhalt des Blogeintrags wird automatisch vom Element abgerufen.",
+                "emptyResult": "Kein Artikel gefunden"
+            }
+        },
+        "blog":{
+            "title":"Blog",
+            "description":"Blog",
+            "saveMessage":"Blog erfolgreich erstellt",
+            "updateMessage":"Blog erfolgreich aktualisiert",
+            "cms":{
+                "blogList":"Blog Liste Element"
+            }
+        },
+        "author":{
+            "title":"Autorin",
+            "saveMessage":"Autor erfolgreich erstellt",
+            "updateMessage":"Autor erfolgreich aktualisiert"
+        },
+        "category":{
+            "title":"Kategorie",
+            "description":"Blog Kategorie",
+            "saveMessage":"Kategorie erfolgreich erstellt",
+            "updateMessage":"Kategorie erfolgreich aktualisiert"
+        }
+    }
+}

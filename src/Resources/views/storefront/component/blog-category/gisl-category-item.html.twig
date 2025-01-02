@@ -1,0 +1,17 @@
+{% block gisl_element_blog_category %}
+    {% set langData = category.translations.elements %}
+    {% set currentLanguageId = context.languageId %}
+    {% set firstKey = langData|keys|first %}
+    {% set firstValue = langData[firstKey] %}
+
+    {% set langDataLength = langData|length %}
+
+    {% if langDataLength > 1 %}
+        {% for lang in langData %}
+            {% if currentLanguageId == lang.languageId %}
+                {% set firstValue = lang %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <a href="#" type="button" class="btn btn-outline-secondary active_category" >{{firstValue.title}}</a>
+{% endblock %}

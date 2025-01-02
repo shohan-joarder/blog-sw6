@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>CMS page blog detail assignment</title>
+        <title lang="de-DE">CMS Seite Detail Ansicht zuweisen</title>
+        <component name="sw-entity-single-select">
+            <name>cmsBlogDetailPage</name>
+            <entity>cms_page</entity>
+            <title>Choose a CMS page for the blog detail page</title>
+            <title lang="de-DE">Wähle eine CMS Seite für die Blog Detail Ansicht aus</title>
+        </component>
+    </card>
+    
+    <card>
+
+        <title>Blog configuration</title>
+        
+        <input-field type="textarea" >
+            <name>shortDescription</name>
+            <label>Short Description</label>
+            <placeholder>Enter short description</placeholder>
+        </input-field>
+
+        <input-field type="textarea" >
+            <name>description</name>
+            <label>Description</label>
+            <placeholder>Enter Description</placeholder>
+        </input-field>
+
+        <component name="sw-media-field">
+            <name>Banner</name>
+            <label>Upload Banner Image</label>
+        </component>
+        
+    </card>
+
+</config>

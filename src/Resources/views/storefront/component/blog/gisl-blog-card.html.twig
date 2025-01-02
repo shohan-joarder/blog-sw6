@@ -1,0 +1,78 @@
+{% block gisl_blog_card %}
+    {% set langData = article.translations.elements %}
+    {% set currentLanguageId = context.languageId %}
+    {% set firstKey = langData|keys|first %}
+    {% set firstValue = langData[firstKey] %}
+
+    {% set langDataLength = langData|length %}
+
+    {% if langDataLength > 1 %}
+        {% for lang in langData %}
+            {% if currentLanguageId == lang.languageId %}
+                {% set firstValue = lang %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <a href="{{ seoUrl('gisl.frontend.blog.detail', {'articleId': article.id}) }}" style="text-decoration: none;">
+        <div class="blog-card">
+            <div class="cardImage">
+                {% if article.media.url %}
+                    <img src="{{ article.media.url }}" class="card-img-top" alt="{{ firstValue.title }}" />
+                {% else %}
+                    <div class="blog-image-placeholder">
+                        {% sw_icon 'placeholder' style {
+                            'size': 'fluid'
+                            } %}
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                <div class="date_area d-flex align-items-center flex-wrap">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        {% if(article.postAuthor.media.url) %}
+                            <img src="{{article.postAuthor.media.url}}"   class="user_icon">
+                        {% else %}
+                            {% sw_icon 'placeholder' style {
+                                'size': 'fluid'
+                            } %}
+                        {% endif %}
+                        <h5>{{ article.postAuthor.name }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" currentColor="#B30505">
+                            <path
+                                d="M19.5 3.95679H4.5C4.08579 3.95679 3.75 4.29257 3.75 4.70679V19.7068C3.75 20.121 4.08579 20.4568 4.5 20.4568H19.5C19.9142 20.4568 20.25 20.121 20.25 19.7068V4.70679C20.25 4.29257 19.9142 3.95679 19.5 3.95679Z"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path d="M16.5 2.45679V5.45679" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.5 2.45679V5.45679" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M3.75 8.45679H20.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <h5>{{ blog.publishedAt|date('F j, Y') }}</h5>
+                    </div>
+                </div>
+                <div class="content_area">
+                    <h3>{{ firstValue.title }}</h3>
+                    <p>
+                        {{ firstValue.short_description }}
+                    </p>
+                </div>
+            </div>
+            <!-- Closed div for card-body -->
+
+            <button class="red_more_btn">
+                <span>READ MORE</span>
+                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" currentColor="#B30505">
+                    <path d="M3.125 10.2068H16.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M11.25 4.58179L16.875 10.2068L11.25 15.8318" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </a>
+
+{% endblock %}

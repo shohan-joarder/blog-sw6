@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="Gisl\GislBlog\Storefront\Controller\GislBlogController" public="true">
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
+            <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader" />
+            <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <call method="setTwig">
+                 <argument type="service" id="twig"/>
+             </call>
+        </service>
+
+        <service id="Gisl\GislBlog\Page\Blog\BlogPageLoader" public="true">
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader" type="service"/>
+            <argument id="werkl_blog_entries.repository" type="service"/>
+        </service>
+
+        <service id="Gisl\GislBlog\Core\Content\Example\SalesChannel\ExampleRoute">
+            <argument type="service" id="product.repository"/>
+        </service>
+
+        <service id="Gisl\GislBlog\Core\Content\GislBlogAuthor\GislBlogAuthorDefinition">
+            <tag name="shopware.entity.definition" entity="gisl_blog_author" />
+        </service>
+
+        <service id="Gisl\GislBlog\Core\Content\GislBlogCategory\GislBlogCategoryDefinition">
+            <tag name="shopware.entity.definition" entity="gisl_blog_category" />
+        </service>
+
+        <service id="Gisl\GislBlog\Core\Content\GislBlogPost\GislBlogPostDefinition">
+            <tag name="shopware.entity.definition" entity="gisl_blog_post" />
+        </service>
+
+        <service id="Gisl\GislBlog\Core\Content\GislBlogTranslation\GislBlogTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="gisl_blog_translation" />
+        </service>
+
+        <service id="Gisl\GislBlog\Subscriber\BlogCmsElementResolver">
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+        
+        <service id="Gisl\GislBlog\Subscriber\BlogCategoryCmsElementResolver">
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+        
+        <service id="Gisl\GislBlog\Subscriber\BlogShortDescriptionCmsElementResolver">
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
+            <argument type="service" id="media.repository" />
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+
+        <!-- <service id="Gisl\GislBlog\Subscriber\BlogSubscriber" public="true">
+            <tag name="kernel.event_subscriber" />
+        </service> -->
+
+    </services>
+</container>

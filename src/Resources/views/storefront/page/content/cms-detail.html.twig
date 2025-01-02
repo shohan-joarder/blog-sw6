@@ -1,0 +1,10 @@
+{% block page_content %}
+{{dump(cmsPage)}}
+    <div class="cms-page-content">
+        {% if cmsPage %}
+            {{ cmsPage.translated.content|raw }}
+        {% else %}
+            <p>No content available for this page.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% block gisl_element_blog_short_description %}
+    {% set element = block.slots.getSlot('content') %}
+     <img src="{{element.data.banner}}" alt="Snow" />
+    <div class="centered banner_content_area">
+        <h1 class="blog-page__title  text-center text-light"> {{ element.config["title"]["value"] }} </h1>
+        <p>{{element.data.shortDescription}}</p>
+        <div class="d-flex justify-content-center">
+            <a type="button" class="btn btn-sm bg-light" href="#blogDescription">{{ element.config["buttonName"]["value"] }}</a>
+        </div>
+    </div>
+{% endblock %}

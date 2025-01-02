@@ -1,0 +1,31 @@
+{% block gisl_element_blog_listing_row %}
+    <div class="cms-news-full-listing-row js-listing-wrapper">
+
+        {% set totalPage = (searchResult.total / searchResult.limit)|round(0, 'ceil') %}
+
+        {% if searchResult.total > 0 %}
+            {% block gisl_element_blog_listing_col %}
+                <div class="row">
+                    {% for article in searchResult %}
+                        {% block gisl_element_blog_listing_box %}
+                            <div class="col-lg-4 col-md-6">
+                                {% sw_include '@Storefront/storefront/component/blog/gisl-blog-card.html.twig' %}
+                            </div>
+                        {% endblock %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% else %}
+            {% block gisl_element_blog_listing_col_empty %}
+                <div class="cms-listing-col col-12">
+                    {% block gisl_element_blog_listing_col_empty_alert %}
+                        {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+                            type: 'info',
+                            content: 'gisl.general.cms.emptyResult'|trans|sw_sanitize
+                        } %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endif %}
+    </div>
+{% endblock %}

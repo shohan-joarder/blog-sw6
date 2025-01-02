@@ -1,0 +1,10 @@
+<div class="cms-block-blog-list">
+    <h3>Blog List</h3>
+    <ul>
+        {% for blog in data.blogPosts %}
+            <li>
+                <a href="{{ blog.url }}">{{ blog.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

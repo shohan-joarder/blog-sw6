@@ -1,0 +1,35 @@
+{
+    "name": "gisl/gisl-blog",
+    "description": "gisl blog solution",
+    "type": "shopware-platform-plugin",
+    "keywords": ["blog"],
+    "version": "1.0.1",
+    "license": "MIT",
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "authors": [
+        {
+            "name": "Golden info systems LTD",
+            "email": "info@goldeninfosystems.com",
+            "role": "Manufacturer"
+        }
+    ],
+    "extra": {
+        "shopware-plugin-class": "Gisl\\GislBlog\\GislBlog",
+        "label": {
+            "de-DE": "GISL-Blog-Plugin",
+            "en-GB": "GISL-Blog-Plugin"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Gisl\\GislBlog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gisl\\GislBlog\\Tests\\": "tests/"
+        }
+    }
+}

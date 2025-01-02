@@ -1,0 +1,57 @@
+{% block blog_author_list %}
+
+<sw-page class="blog-author-list">
+
+    {% block blog_author_list_smart_bar_actions %}
+        <template #smart-bar-actions>
+            <sw-button
+                variant="primary"
+                :routerLink="{ name: 'blog.author.create' }"
+                ><sw-icon name="regular-plus-circle-s" /> {{ $tc('gisl.general.new') }}
+            </sw-button>
+        </template>
+    {% endblock %}
+
+    <template #content>
+        <div class="item_row">
+            <div class="side_nav">
+                <blog-aside  activeRoute="Author"/>
+            </div>
+            <div class="col-10">
+
+                <sw-data-grid
+                    :dataSource="items"
+                    :columns="columns"
+                    :showSelection="false"
+                    >
+
+                    <template #actions="{ item }">
+                        <sw-context-menu-item @click="onEditItem(item)">Edit</sw-context-menu-item>
+                        <sw-context-menu-item @click="itemId = item.id; confirmModal = !confirmModal">Delete</sw-context-menu-item>
+                    </template>
+                </sw-data-grid>
+                <!-- Pagination Controls -->
+                <sw-pagination
+                    :currentPage="page"
+                    :total="total"
+                    :limit="limit"
+                    @page-change="onPageChange"
+                />
+
+            </div>
+        </div>
+    </template>
+        
+</sw-page>
+
+<sw-confirm-modal
+    v-if="confirmModal"
+    class="sw-my-component__confirm-delete-modal"
+    type="delete"
+    :text="'Are you sure you want to delete this?'"
+    @confirm="onDeleteItem()"
+    @close="confirmModal = !confirmModal"
+    @cancel="confirmModal = !confirmModal">
+</sw-confirm-modal>
+
+{% endblock %}

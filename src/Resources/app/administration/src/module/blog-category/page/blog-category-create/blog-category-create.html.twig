@@ -1,0 +1,90 @@
+{% block blog_category_list %}
+
+<sw-page class="blog-category-create">
+
+    {% block blog_category_list_smart_bar_actions %}
+        <template #smart-bar-actions>
+            <languages  :languageId="languageId" @change="handleLanguageChange" :isDisable="!item.id" />
+            <sw-button 
+                :disabled="true" 
+                :square="false" 
+                :block="false"  
+                variant="primary" 
+                :isLoading="true" 
+                v-if="loading"
+                >
+                Processing...
+            </sw-button>
+
+            <sw-button
+                v-else
+                variant="primary"
+                @click="onSave"
+                >
+                <span v-if="item.id"><sw-icon name="regular-layer-group" /> {{ $tc('gisl.general.update') }} </span>
+                <span v-else><sw-icon name="regular-save" /> {{ $tc('gisl.general.save') }} </span>
+            </sw-button>
+        </template>
+    {% endblock %}
+
+    <template #content> 
+
+        <sw-card :title="cardTitle">
+
+            <sw-text-field 
+                v-model:value="item.name" 
+                :required="true" 
+                :error="errors.name"
+                label="Name"
+            />
+            <sw-text-field 
+                v-model:value="item.slug" 
+                :required="true" 
+                :error="errors.slug"
+                label="Slug" 
+            />
+            
+            <sw-textarea-field 
+                v-model:value="item.shortDescription" 
+                label="Short Description"
+                :required="true"
+                :error="errors.short_description"
+            />
+
+            <sw-textarea-field 
+                v-model:value="item.description" 
+                label="Description"
+            />
+            
+            <sw-media-field
+                label="Select Media"
+                v-model:value="item.mediaId"
+                :allowMultiSelect="false"
+            />
+
+            <sw-switch-field v-model:value="item.active" label="Active"></sw-switch-field>
+
+            <sw-text-field 
+                v-model:value="item.meta_title"
+                :error="errors.meta_title"
+                label="Meta Title" 
+            />
+
+            <sw-textarea-field 
+                v-model:value="item.meta_description" 
+                label="Meta Description"
+            />
+
+            <sw-textarea-field 
+                v-model:value="item.meta_keywords" 
+                label="Meta Keywords"
+            />
+
+
+        </sw-card>
+
+    </template>
+        
+</sw-page>
+
+{% endblock %}

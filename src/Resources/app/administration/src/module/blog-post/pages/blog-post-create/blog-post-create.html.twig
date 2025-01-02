@@ -1,0 +1,165 @@
+{% block blog_post_list %}
+
+<sw-page class="blog-post-create">
+
+    {% block blog_post_smart_bar_actions %}
+        <template #smart-bar-actions>
+            <span v-if="item.id">
+                <languages  :languageId="languageId" @change="handleLanguageChange" />
+            </span>
+            <sw-button 
+                :disabled="true" 
+                :square="false" 
+                :block="false"  
+                variant="primary" 
+                :isLoading="true" 
+                v-if="loading"
+                >
+                Processing...
+            </sw-button>
+
+            <sw-button
+                v-else
+                variant="primary"
+                @click="onSave"
+                >
+                <span v-if="item.id"><sw-icon name="regular-layer-group" /> {{ $tc('gisl.general.update') }} </span>
+                <span v-else><sw-icon name="regular-save" /> {{ $tc('gisl.general.save') }} </span>
+            </sw-button>
+        </template>
+    {% endblock %}
+
+    <template #content> 
+
+        <sw-card :title="cardTitle">
+
+            <sw-text-field
+                label="Title"
+                v-model:value="item.title"
+                :required="true" 
+                :placeholder="'Enter blog title...'"
+                :error="errors.title"
+                >
+            </sw-text-field>
+            
+            <sw-text-field
+                label="Slug"
+                v-model:value="item.slug"
+                :required="true" 
+                :error="errors.slug"
+                :placeholder="'Enter slug...'"
+                >
+            </sw-text-field>
+
+            <sw-multi-select
+                label="Select category"
+                :options="categoryList"
+                v-model:value="item.categories"
+                :allow-new="true"
+                :allow-new-items="true"
+                :label-property="'name'"
+                :value-property="'id'"
+                placeholder="Select category"
+                >
+            </sw-multi-select>   
+
+            <sw-select-field
+                label="Select an author"
+                placeholder="Choose an author..."
+                v-model:value="item.authorId"
+                :options="authors"
+                :searchable="true"
+                :allow-clear="true"
+                :label-property="'name'"
+                :value-property="'id'"
+                :required="true" 
+                :error="errors.authorId"
+            >
+            </sw-select-field>
+
+            <sw-datepicker
+                v-model:value="item.publishedAt"
+                label="Publish Date"
+                placeholder="Select publish date and time"
+                dateType="datetime"
+                :timePicker="false"
+                :datePicker="true"
+                :allowInput="true"
+                :clearable="true"
+                :required="true"
+                :error="errors.publishedAt"
+            />
+
+            <sw-textarea-field 
+                v-model:value="item.shortDescription" 
+                label="Short Description"
+                validation="required"
+                :required="true"
+                :error="errors.short_description"
+            />
+
+            <quill-editor name="Description" v-model="item.description" @input="updateDescription"></quill-editor>
+
+            <div class="inputLabel">
+                <h6>Tags</h6>
+                <sw-button
+                    variant="primary"
+                    title="New tag"
+                    @click="newTag"
+                    >
+                    <sw-icon name="regular-plus-circle-s" />
+                </sw-button>
+            </div>
+
+            <sw-multi-select
+                :options="tags"
+                v-model:value="item.tags"
+                :allow-new="true"
+                :allow-new-items="true"
+                :label-property="'name'"
+                :value-property="'id'"
+                placeholder="Select tags"
+                >
+            </sw-multi-select>
+            
+            <sw-media-field
+                v-model:value="item.mediaId"
+                label="Select or upload an image"
+                :media-upload-tag="'blog-post-media'"
+                :allow-multi-select="false"
+                type="button"
+            />
+            
+            <sw-switch-field v-model:value="item.active" label="Active"></sw-switch-field>
+
+            <h5> Meta Info </h5>
+            
+            <sw-text-field
+                label="Meta Title"
+                v-model:value="item.meta_title"
+                :placeholder="'Enter meta title...'"
+            >
+            </sw-text-field>
+
+            <sw-textarea-field
+                label="Meta Description"
+                v-model:value="item.meta_description"
+                :placeholder="'Enter meta descriiption...'"
+                >
+            </sw-textarea-field>
+
+            <sw-textarea-field
+                label="Meta keywords"
+                v-model:value="item.meta_keywords"
+                :placeholder="'Enter meta keywords'"
+            >
+            </sw-textarea-field>
+
+
+        </sw-card>
+
+    </template>
+        
+</sw-page>
+
+{% endblock %}

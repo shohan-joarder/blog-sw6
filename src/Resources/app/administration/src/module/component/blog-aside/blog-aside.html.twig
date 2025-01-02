@@ -1,0 +1,10 @@
+<ul>
+    <li v-for="option in options" :key="option.target">
+        <a 
+            :class="option.name === activeRoute ? 'activeLink' : 'link'"
+            :href="'#' + option.target"
+        >
+            {{ option.name }}
+        </a>
+    </li>
+</ul>

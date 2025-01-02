@@ -1,0 +1,26 @@
+{% block gisl_element_blog_listing %}
+    {% set cmsPage = page.landingPage ? page.landingPage.cmsPage : page.cmsPage %}
+    {% set searchResult = element.data %}
+    {% set config = element.fieldConfig.elements %}
+    {% set slot = cmsPage.firstElementOfType('gisl-blog-listing') %}
+    {% set filterUrl = null %}
+    {% set dataUrl = null %}
+
+    {% if page.landingPage %}
+        {% set dataUrl = url('frontend.landing.page', { landingPageId: page.landingPage.id }) %}
+    {% elseif page.header.navigation.active.id %}
+        {% set dataUrl = url('frontend.cms.navigation.page', { navigationId: page.header.navigation.active.id }) %}
+    {% endif %}
+
+    {% set params = { slots: slot.id, 'no-aggregations': 1 } %}
+
+
+    {% sw_include '@Storefront/storefront/component/blog/gisl-blog-listing.html.twig' with {
+        searchResult: searchResult,
+        dataUrl: dataUrl,
+        filterUrl: filterUrl,
+        params: params,
+        config: config
+    } %}
+
+{% endblock %}

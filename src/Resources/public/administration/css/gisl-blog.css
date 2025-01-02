@@ -1,0 +1,8 @@
+.item_row{display:grid;grid-template-columns:1fr 11fr}.side_nav{margin:5px}.side_nav ul{list-style-type:none;padding:0;margin:0}.side_nav li{margin-bottom:10px}.side_nav a{display:block;padding:8px 15px;color:#fff;text-decoration:none;font-size:16px;font-weight:500;transition:background-color .3s ease,color .3s ease}.side_nav a:hover{background-color:#3b4d61;color:#d1e7ff}.side_nav .activeLink{background-color:#1a73e8;color:#fff;font-weight:600}.side_nav a.link{color:#aab4be}#language-select{padding:11px;background:#fff;margin:0px;border:1px solid gray;border-radius:5px}
+.inputLabel{display:flex;align-items:center;justify-content:space-between}.inputLabel>button{width:30px;height:30px;display:flex;text-align:center;justify-content:center}
+
+
+
+
+
+

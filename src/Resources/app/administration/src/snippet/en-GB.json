@@ -1,0 +1,55 @@
+{
+    "gisl": {
+        "general": {
+            "dailymotionLabel":"Dailymotion Video",
+            "title": "Blog",
+            "titleLabel": "Title",
+            "blogListing": "Blog List",
+            "description": "Manage blog here",
+            "new":"New",
+            "save":"Save",
+            "update":"Update",
+            "success":"Success",
+            "error":"Error",
+            "common_error_message":"Something went wrong please try again later",
+            "common_delete_message":"Item deleted successfully!",
+            "paginationCount":"Pagination count",
+            "sectionTitle":"Title",
+            "allBlog": "All Blog",
+            "buttonTitle":"Button Title",
+            "cms":{
+                "blogTitle":"Blog List",
+                "blogListAlert":"Blog listing will be rendered here in the storefront",
+                "blogDetailsTitle":"Blog Details",
+                "blogDetailsAlert":"Blog Details will be rendered here in the storefront",
+                "blogCategoryTitle":"Blog Category",
+                "blogCategoryListAlert":"Blog Category listing will be rendered here in the storefront",
+                "blogShortDescription":"Blog Short Description",
+                "blogShortDescriptionAlert":"Blog Short Description will be rendered here in the storefront",
+                "generalMessage":"The blog listing content will be automatically fetched by the element.",
+                "emptyResult": "No, item found"
+            }
+        },
+        "blog":{
+            "title":"Blog",
+            "description":"Blog author",
+            "saveMessage":"Blog created successfully",
+            "updateMessage":"Blog updated successfully",
+            "cms":{
+                "blogList":"Blog Lists Element"
+            }
+        },
+        "author":{
+            "title":"Author",
+            "description":"Blog author",
+            "saveMessage":"Author created successfully",
+            "updateMessage":"Author updated successfully"
+        },
+        "category":{
+            "title":"Category",
+            "description":"Blog category",
+            "saveMessage":"Category created successfully",
+            "updateMessage":"Category updated successfully"
+        }
+    }
+}

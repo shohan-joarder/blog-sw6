@@ -1,0 +1,3 @@
+<select @change="handleLanguageChange($event)" id="language-select" v-model="languageId" :disabled="isDisable">
+    <option v-for="language in languageOptions" :value="language.id" :key="language.id" >{{ language.name }}</option>
+</select>
