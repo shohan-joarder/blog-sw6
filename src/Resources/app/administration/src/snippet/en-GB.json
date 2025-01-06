@@ -18,6 +18,7 @@
             "allBlog": "All Blog",
             "buttonTitle":"Button Title",
             "cms":{
+                "title":"Blog",
                 "blogTitle":"Blog List",
                 "blogListAlert":"Blog listing will be rendered here in the storefront",
                 "blogDetailsTitle":"Blog Details",
@@ -25,9 +26,15 @@
                 "blogCategoryTitle":"Blog Category",
                 "blogCategoryListAlert":"Blog Category listing will be rendered here in the storefront",
                 "blogShortDescription":"Blog Short Description",
+                "blogDescription":"Blog Description",
                 "blogShortDescriptionAlert":"Blog Short Description will be rendered here in the storefront",
                 "generalMessage":"The blog listing content will be automatically fetched by the element.",
-                "emptyResult": "No, item found"
+                "emptyResult": "No, item found",
+                "showCategory":"Show Category",
+                "showTag":"Show Tag",
+                "relatedBlog":"Related Blog",
+                "relatedBlogAlert":"The related blog listing content will be automatically fetched by the element.",
+                "recentBlog":"Recent Blog"
             }
         },
         "blog":{

@@ -4,7 +4,7 @@ import './preview';
 Shopware.Service('cmsService').registerCmsBlock({
     name: 'gisl-blog-details',
     label: 'gisl.general.cms.blogDetailsTitle',
-    category: 'text',
+    category: 'gisl-blog',
     component: 'sw-cms-block-gisl-blog-details',
     previewComponent: 'sw-cms-preview-gisl-blog-details',
     defaultConfig: {
@@ -15,8 +15,6 @@ Shopware.Service('cmsService').registerCmsBlock({
         sizingMode: 'boxed',
     },
     slots: {
-        content: {
-            type: 'gisl-blog-details',
-        },
-    },
+        blogDetail: 'gisl-blog-details',
+    }
 });

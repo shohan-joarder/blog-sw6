@@ -1,0 +1,9 @@
+{% block gisl_element_related_blog %}
+{% set searchResult = element.data %}
+<h5 class="related_details_title">{{ element.translated.config["sectionTitle"]["value"] }}</h5>
+    <div class="related-article">
+        <div class="row">
+            {% sw_include '@Storefront/storefront/component/related-blog/related-blog.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

@@ -7,9 +7,13 @@ Shopware.Service('cmsService').registerCmsElement({
     component: 'sw-cms-el-gisl-blog-details',
     configComponent: 'sw-cms-el-config-gisl-blog-details',
     defaultConfig: {
-        paginationCount: {
+        showCategory: {
             source: 'static',
-            value: 5,
+            value: true,
+        },
+        showTag: {
+            source: 'static',
+            value: true,
         }
     }
 });

@@ -1,17 +1,16 @@
-{% block gisl_cms_element_blog_listing_config %}
+{% block gisl_cms_element_blog_details_config %}
 <div class="sw-cms-el-config-blog">
 
-    {% block gisl_cms_element_blog_listing_config_paginationCount_field %}
-        <sw-number-field
-            numberType="int"
-            :step="1"
-            :min="1"
-            :max="null"
-            v-model:value="element.config.paginationCount.value"
-            :digits="2"
-            :allowEmpty="false"
-            :label="$tc('gisl.general.paginationCount')">
-        </sw-number-field>
+    {% block gisl_cms_element_blog_details_config_paginationCount_field %}
+            <sw-checkbox-field
+                :label="$tc('gisl.general.cms.showCategory')"
+                v-model:value="element.config.showCategory.value">
+            </sw-checkbox-field>
+
+            <sw-checkbox-field
+                :label="$tc('gisl.general.cms.showTag')"
+                v-model:value="element.config.showTag.value">
+            </sw-checkbox-field>
     {% endblock %}
 
 </div>

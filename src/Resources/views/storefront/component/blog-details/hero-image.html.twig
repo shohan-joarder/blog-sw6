@@ -1,0 +1,8 @@
+
+{% if details.banner %}
+    <img src="{{ details.banner }}" alt="{{ details.title }}" />
+{% else %}
+       {% sw_icon 'placeholder' style {
+            'size': 'fluid'
+        } %}
+{% endif %}

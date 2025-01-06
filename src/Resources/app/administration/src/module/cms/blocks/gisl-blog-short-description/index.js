@@ -4,7 +4,7 @@ import './preview';
 Shopware.Service('cmsService').registerCmsBlock({
     name: 'gisl-blog-short-description',
     label: 'gisl.general.cms.blogShortDescription',
-    category: 'text',
+    category: 'gisl-blog',
     component: 'sw-cms-block-gisl-blog-short-description',
     previewComponent: 'sw-cms-preview-gisl-blog-short-description',
     defaultConfig: {

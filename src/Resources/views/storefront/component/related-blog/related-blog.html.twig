@@ -1,0 +1,7 @@
+{% for article in searchResult.relatedBlogs.elements %}
+    {% block gisl_element_blog_listing_box %}
+        <div class="col-lg-4 col-md-6">
+            {% sw_include '@Storefront/storefront/component/blog/gisl-blog-card.html.twig' %}
+        </div>
+    {% endblock %}
+{% endfor %}

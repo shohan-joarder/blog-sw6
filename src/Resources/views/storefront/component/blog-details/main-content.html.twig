@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="table_content_area">
+            <h3 class="blog_details_title">{{ 'gisl.tableContentTitle'|trans }}</h3>
+            <ul class="table_list">
+                {#  class="active_list"#}
+                {% if details.toc != "" %}
+                    {{details.toc |raw}}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="blog_details_content_area" id="content" >
+            {{ details.description|raw }}
+        </div>
+        <ul class="social_share_list">
+            <li>
+                <h3>{{ 'shareNow'|trans }}</h3>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}" class="share_btn" target="_blank">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.8906 1.20679H3.89062C2.79062 1.20679 1.89062 2.10679 1.89062 3.20679V17.2068C1.89062 18.3078 2.79062 19.2068 3.89062 19.2068H10.8906V12.2068H8.89062V9.73179H10.8906V7.68179C10.8906 5.51779 12.1026 3.99779 14.6566 3.99779L16.4596 3.99979V6.60479H15.2626C14.2686 6.60479 13.8906 7.35079 13.8906 8.04279V9.73279H16.4586L15.8906 12.2068H13.8906V19.2068H17.8906C18.9906 19.2068 19.8906 18.3078 19.8906 17.2068V3.20679C19.8906 2.10679 18.9906 1.20679 17.8906 1.20679Z" fill="#757575"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.twitter.com/share?url={{ app.request.uri }}" class="share_btn" target="_blank">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.77 18.0193L12.5222 8.91274L12.5328 8.92128L18.1662 2.39429H16.2837L11.6946 7.70679L8.05029 2.39429H3.11312L8.94609 10.8964L8.94539 10.8957L2.79346 18.0193H4.67598L9.77797 12.1088L13.8329 18.0193H18.77ZM7.30439 3.81474L16.0705 16.5988H14.5787L5.80551 3.81474H7.30439Z" fill="#757575"/>
+                    </svg>
+
+                </a>
+            </li>
+            <li>
+                <a href="mailto:?subject=Check this out&body={{ app.request.uri | url_encode }}" class="share_btn" target="_blank">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.6729 4.20679H4.67285C3.57285 4.20679 2.67285 5.10679 2.67285 6.20679V18.2068C2.67285 19.3068 3.57285 20.2068 4.67285 20.2068H20.6729C21.7729 20.2068 22.6729 19.3068 22.6729 18.2068V6.20679C22.6729 5.10679 21.7729 4.20679 20.6729 4.20679ZM20.2729 8.45679L13.7329 12.5468C13.0829 12.9568 12.2629 12.9568 11.6129 12.5468L5.07285 8.45679C4.97258 8.4005 4.88477 8.32445 4.81474 8.23324C4.74471 8.14203 4.69391 8.03756 4.66543 7.92616C4.63694 7.81475 4.63135 7.69872 4.64901 7.58509C4.66666 7.47147 4.70719 7.3626 4.76813 7.26509C4.82908 7.16758 4.90918 7.08344 5.00358 7.01778C5.09798 6.95212 5.20472 6.9063 5.31735 6.88309C5.42997 6.85987 5.54613 6.85975 5.65881 6.88274C5.77148 6.90572 5.87832 6.95132 5.97285 7.01679L12.6729 11.2068L19.3729 7.01679C19.4674 6.95132 19.5742 6.90572 19.6869 6.88274C19.7996 6.85975 19.9157 6.85987 20.0284 6.88309C20.141 6.9063 20.2477 6.95212 20.3421 7.01778C20.4365 7.08344 20.5166 7.16758 20.5776 7.26509C20.6385 7.3626 20.679 7.47147 20.6967 7.58509C20.7143 7.69872 20.7088 7.81475 20.6803 7.92616C20.6518 8.03756 20.601 8.14203 20.531 8.23324C20.4609 8.32445 20.3731 8.4005 20.2729 8.45679Z" fill="#757575"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="share_btn" onclick="(() => {
+                    const link = '{{ app.request.uri}}';
+                    const tempInput = document.createElement('input');
+                    tempInput.value = link;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    alert('Link copied successfully!');
+                        })()">
+                        <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.11413 14.2069C5.11413 12.2119 6.73579 10.5902 8.73079 10.5902H13.3975V8.37354H8.73079C7.1837 8.37354 5.69997 8.98812 4.606 10.0821C3.51204 11.176 2.89746 12.6598 2.89746 14.2069C2.89746 15.754 3.51204 17.2377 4.606 18.3317C5.69997 19.4256 7.1837 20.0402 8.73079 20.0402H13.3975V17.8235H8.73079C6.73579 17.8235 5.11413 16.2019 5.11413 14.2069ZM9.89746 15.3735H19.2308V13.0402H9.89746V15.3735ZM20.3975 8.37354H15.7308V10.5902H20.3975C22.3925 10.5902 24.0141 12.2119 24.0141 14.2069C24.0141 16.2019 22.3925 17.8235 20.3975 17.8235H15.7308V20.0402H20.3975C21.9446 20.0402 23.4283 19.4256 24.5223 18.3317C25.6162 17.2377 26.2308 15.754 26.2308 14.2069C26.2308 12.6598 25.6162 11.176 24.5223 10.0821C23.4283 8.98812 21.9446 8.37354 20.3975 8.37354Z" fill="#757575"/>
+                    </svg>
+
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="details_right_area">
+            {% if ( details.allCat | length >0)%}
+                <div class="category">
+                    <h3 class="blog_details_title">{{ 'gisl.categoryTitle'|trans }}</h3>
+                    <div class="category_list d-flex align-items-center flex-wrap gap-2 category-area" >
+                        {% for category in details.allCat %}
+                            <a type="button"   href="#" 
+                            class="btn {{ category.fkId in details.blogCat ? 'active_category' : '' }}" 
+                            >{{ category.title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if ( blog.relatedProducts | length >0)%}
+                <div class="related_product_area">
+                    <h3 class="blog_details_title">{{ 'blog-details.title.relatedProductTitle'|trans }}</h3>
+                    <div class="related_product_grid">
+                        {% for product in blog.relatedProducts %}
+                                <a href="{{ product.url }}" class="related_product">
+                                    <img class="product_img product_img_primary" 
+                                            src="{{ product.media[0] is defined ? product.media[0] : 'https://placehold.co/500x500' }}" 
+                                            alt="{{ product.name }}" data-src="{{ product.media[1] is defined ? product.media[1]:"" }}"  >
+                                    {% if product.name !="" %}
+                                    <h4 class="related_product_title">{{product.name}}</h4>
+                                    {% endif %}
+                                </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

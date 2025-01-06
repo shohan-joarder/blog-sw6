@@ -5,7 +5,7 @@
         <h1 class="blog-page__title  text-center text-light"> {{ element.config["title"]["value"] }} </h1>
         <p>{{element.data.shortDescription}}</p>
         <div class="d-flex justify-content-center">
-            <a type="button" class="btn btn-sm bg-light" href="#blogDescription">{{ element.config["buttonName"]["value"] }}</a>
+            <a type="button" class="btn btn-sm bg-light" href="{{ element.config["targetId"]["value"] }}">{{ element.config["buttonName"]["value"] }}</a>
         </div>
     </div>
 {% endblock %}

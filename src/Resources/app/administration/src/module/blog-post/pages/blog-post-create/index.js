@@ -84,11 +84,20 @@ Component.register('blog-post-create', {
         
                 if (result && result.length > 0) {
                     const item = result[0];
+
+                    console.log(item)
                     this.item = { 
                         // Update the item safely with spread operator
                         ...this.item,
                         ...item,
                     };
+
+                    if(item.tags == null){
+                        this.item = {
+                            ...this.item,
+                            tags:[]
+                        }
+                    }
                 } else {
                     console.warn("Item not found with ID:", itemId);
                     return;

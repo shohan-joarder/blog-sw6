@@ -14,6 +14,10 @@ Shopware.Service('cmsService').registerCmsElement({
         buttonName: {
             source: 'static',
             value: "Read More"
+        },
+        targetId: {
+            source: 'static',
+            value: "#gislBlogDescription"
         }
     },
 });

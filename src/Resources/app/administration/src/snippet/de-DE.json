@@ -18,6 +18,7 @@
             "allBlog": "Alle Blogs",
             "buttonTitle":"Schaltflächentitel",
             "cms":{
+                "title":"Blog",
                 "blogTitle":"Blog Liste",
                 "blogListAlert":"Der Blogeintrag wird hier im Storefront gerendert",
                 "blogDetailsTitle":"Blogdetails",
@@ -25,9 +26,15 @@
                 "blogCategoryTitle":"Blog-Kategorie",
                 "blogCategoryListAlert":"Die Auflistung der Blog-Kategorien wird hier in der Storefront gerendert",
                 "blogShortDescription":"Blog-Kurzbeschreibung",
+                "blogDescription":"Blog-Beschreibung",
                 "blogShortDescriptionAlert":"Die Blog-Kurzbeschreibung wird hier im Storefront gerendert",
                 "generalMessage":"Der Inhalt des Blogeintrags wird automatisch vom Element abgerufen.",
-                "emptyResult": "Kein Artikel gefunden"
+                "emptyResult": "Kein Artikel gefunden",
+                "showCategory":"Kategorie anzeigen",
+                "showTag":"Kategorie Etikett",
+                "relatedBlog":"Verwandter Blog",
+                "relatedBlogAlert":"Der zugehörige Inhalt des Blogeintrags wird automatisch vom Element abgerufen.",
+                "recentBlog":"Aktueller Blog"
             }
         },
         "blog":{

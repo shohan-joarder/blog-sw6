@@ -1,0 +1,6 @@
+{% block gisl_cms_block_related_blog %}
+    {% set element = block.slots.getSlot('content') %}
+    <div class="container latestBlogs pt-2 pt-lg-3 pb-2 pb-lg-5" data-cms-element-id="{{ element.id }}">
+        {% sw_include "@Storefront/storefront/element/cms-block-gisl-recent-blog.html.twig" ignore missing %}
+    </div>
+{% endblock %}

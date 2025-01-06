@@ -1,0 +1,9 @@
+{% block gisl_cms_block_blog_sdescription %}
+    {% set element = block.slots.getSlot('content') %}
+    <div class="description"  data-cms-element-id="{{ element.id }}" id="{{element.config['targetId']['value']}}">
+
+        {% sw_include "@Storefront/storefront/element/cms-element-gisl-blog-description.html.twig" ignore missing %}
+    
+    </div>
+
+{% endblock %}

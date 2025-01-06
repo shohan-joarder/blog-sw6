@@ -1,0 +1,15 @@
+<div class="inner_area">
+    <p class="blog_header_category"> {{details.catName}}</p>
+    <h2>
+        {{ details.title }}
+    </h2>
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 mt-2" >
+        <div class="user_area d-flex align-items-center flex-wrap gap-2">
+            {% if details.authorImage %}
+                <img src="{{ details.authorImage }}" alt="{{ details.author }}" />
+            {% endif %}
+            <h4>{{ details.author }}</h4>
+        </div>
+        <h5 class="date">{{ details.publishedAt }}</h5>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+{% block gisl_cms_element_related_blog_config %}
+<div class="sw-cms-el-config-related-blog">
+
+    {% block gisl_cms_element_related_blog_config %}
+    
+        <sw-text-field
+            v-model:value="element.config.sectionTitle.value"
+            :digits="2"
+            :allowEmpty="false"
+            :label="$tc('gisl.general.sectionTitle')">
+        </sw-text-field>
+        
+    {% endblock %}
+
+</div>
+{% endblock %}

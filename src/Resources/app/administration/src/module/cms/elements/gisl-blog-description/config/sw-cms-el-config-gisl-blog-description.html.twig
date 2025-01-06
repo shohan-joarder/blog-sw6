@@ -1,0 +1,15 @@
+{% block gisl_cms_element_blog_description_config %}
+<div class="sw-cms-el-config-blog">
+    {% block gisl_cms_element_blog_description_config_section_title_field %}
+        <sw-text-field
+            v-model:value="element.config.title.value"
+            :label="$tc('gisl.general.titleLabel')">
+        </sw-text-field>
+        <sw-text-field
+            v-model:value="element.config.targetId.value"
+            placeholder="Please do not use any space"
+            label="Target Id">
+        </sw-text-field>
+    {% endblock %}
+</div>
+{% endblock %}
