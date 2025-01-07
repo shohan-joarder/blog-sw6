@@ -14,6 +14,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Gisl\GislBlog\Core\Content\GislBlogPost\GislBlogPostDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\CustomFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
+
 use Shopware\Core\Defaults;
 
 
@@ -26,6 +30,10 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
 
     public function collect(CmsSlotEntity $slot, ResolverContext $resolverContext): ?CriteriaCollection
     {
+        $request = $resolverContext->getRequest();
+
+        $categoryId = $request->query->get("category");
+
         $criteria = new Criteria();
 
         $dateTime = new \DateTime();
@@ -36,15 +44,23 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])
         );
 
+        if ($categoryId) {
+            $criteria->addFilter(
+                new ContainsFilter('categories', $categoryId)
+            );
+        }
+        
         $criteria->addAssociations([
             'translations',
             'postAuthor.media',
             'media'
         ]);
 
+        $criteria->addSorting(new FieldSorting('publishedAt', FieldSorting::DESCENDING));
+
         $slotConfig = $slot->getConfig();
         // Add pagination
-        $currentPage = $resolverContext->getRequest()->query->getInt('page', 1); // Default to page 1
+        $currentPage = $request->query->getInt('page', 1); // Default to page 1
         $limit = isset($slotConfig["paginationCount"]["value"])?$slotConfig["paginationCount"]["value"]:9;
         $offset = ($currentPage - 1) * $limit;
         $criteria->setLimit($limit);

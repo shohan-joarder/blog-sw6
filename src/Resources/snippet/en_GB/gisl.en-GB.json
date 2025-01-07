@@ -1,6 +1,8 @@
 {
     "gisl":{
         "tableContentTitle": "Table of Content",
-        "categoryTitle":"Category"
+        "categoryTitle":"Category",
+        "emptyResult": "No, item found",
+        "relatedProductTitle": "Related Products"
     }
 }

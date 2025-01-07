@@ -21,14 +21,18 @@ use Gisl\GislBlog\Subscriber\Struct\BlogDetailsData;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use DOMDocument;
 use Shopware\Core\Framework\Context;
+use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 
 class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
 {
     private EntityRepository $categoryRepository;
-
-    public function __construct(EntityRepository $categoryRepository){
+    private SystemConfigService $systemConfigService;
+    private EntityRepository $productRepository;
+    public function __construct(EntityRepository $categoryRepository,SystemConfigService $systemConfigService,EntityRepository $productRepository){
         $this->categoryRepository = $categoryRepository;
+        $this->systemConfigService = $systemConfigService;
+        $this->productRepository = $productRepository;
     }
 
     public function getType(): string
@@ -74,6 +78,11 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         ResolverContext $resolverContext,
         ElementDataCollection $result
     ): void {
+
+        $pluginConfig = $this->systemConfigService->get('GislBlog.config');
+
+        $listingUrl = $pluginConfig['blogListingUrl'] ?? "blog";
+
         $salesChannelContext = $resolverContext->getSalesChannelContext();
     
         // Get the current language ID from the SalesChannelContext
@@ -169,6 +178,14 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             $tableOfContent = ""; // Set a default value if no description is available
         }
     
+        $relatedProducts = [];
+
+        if($blogPost->tags){
+
+            $relatedProduct = $this->makeRelatedProduct($blogPost->tags,$salesChannelContext);
+        }
+        
+
         $title = $firstItemTransData->title ?? '';
         // Prepare the data to be displayed
         $authorName = $blogPost->postAuthor?->name ?? '';
@@ -183,10 +200,61 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
     
         $slotData->allCat =$allCategory; 
         $slotData->blogCat =$blogCategory; 
+        $slotData->blogListingUrl = $listingUrl;
+        $slotData->relatedProduct = $relatedProduct;
         // Set the data on the slot
         $slot->setData($slotData);
     }
     
+    private function makeRelatedProduct(array $tagIds, $salesChannelContext)
+    {
+        try {
+            // Retrieve the current context from the SalesChannelContext
+            $context = $salesChannelContext->getContext();
+    
+            // Create criteria for querying products
+            $criteria = new Criteria();
+            $criteria->addAssociation('tags');       // Load tags association
+            $criteria->addAssociation('seoUrls');    // Load SEO URLs association
+            $criteria->addAssociation('media');      // Load media association
+    
+            // Filters to include only relevant products
+            $criteria->addFilter(new RangeFilter('stock', ['gt' => 0])); // Only products with stock > 0
+            $criteria->addFilter(new EqualsFilter('available', true));   // Only available products
+            $criteria->addFilter(new EqualsFilter('active', true));      // Only active products
+    
+            // Filter by tag IDs (support for multiple tags using MultiFilter)
+            if (!empty($tagIds)) {
+                $criteria->addFilter(new MultiFilter(
+                    MultiFilter::CONNECTION_OR,
+                    array_map(fn($tagId) => new EqualsFilter('tags.id', $tagId), $tagIds)
+                ));
+            }
+    
+            // Add filter to include only parent products or one variant (if variants exist)
+            $criteria->addFilter(new MultiFilter(
+                MultiFilter::CONNECTION_OR, [
+                    new EqualsFilter('parentId', null),      // Parent products
+                    new EqualsFilter('displayGroup', 'variant') // One variant if present
+                ]
+            ));
+    
+            // Perform the search in the repository
+            $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
+
+            // Return the resulting product entities
+            return $productEntities;
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            $this->logger->error('Error in makeRelatedProduct function: ' . $e->getMessage(), [
+                'exception' => $e,
+                'tagIds' => $tagIds
+            ]);
+    
+            // Return an empty result in case of an exception
+            return [];
+        }
+    }
 
     private function makeToc($content)
     {

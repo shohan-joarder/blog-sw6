@@ -15,10 +15,17 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
 use Shopware\Core\Defaults;
 use Gisl\GislBlog\Core\Content\GislBlogCategory\GislBlogCategoryDefinition;
-
+use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 class BlogCategoryCmsElementResolver extends AbstractCmsElementResolver
 {
+    private SystemConfigService $systemConfigService;
+
+    public function __construct(SystemConfigService $systemConfigService)
+    {
+        $this->systemConfigService = $systemConfigService;
+    }
+
     public function getType(): string
     {
         return 'gisl-blog-category';
@@ -51,11 +58,23 @@ class BlogCategoryCmsElementResolver extends AbstractCmsElementResolver
 
     public function enrich(CmsSlotEntity $slot, ResolverContext $resolverContext, ElementDataCollection $result): void
     {
+        $request = $resolverContext->getRequest();
+
+        $categoryId = $request->query->get("category");
+
+        $pluginConfig = $this->systemConfigService->get('GislBlog.config');
+
+        $listingUrl = $pluginConfig['blogListingUrl'] ?? "blog";
 
         $gislBlog = $result->get('gisl_blog_category');
+
         if (!$gislBlog instanceof EntitySearchResult) {
             return;
         }
+
+        $gislBlog->blogListingUrl = $listingUrl;
+
+        $gislBlog->categoryId = $categoryId??null;
 
         $slot->setData($gislBlog);
     }

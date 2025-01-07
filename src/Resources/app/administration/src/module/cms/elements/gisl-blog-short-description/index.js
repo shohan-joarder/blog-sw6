@@ -18,6 +18,11 @@ Shopware.Service('cmsService').registerCmsElement({
         targetId: {
             source: 'static',
             value: "#gislBlogDescription"
-        }
+        },
+        shortDescription: {
+            source: 'static',
+            value: "Short Description"
+        },
+        
     },
 });

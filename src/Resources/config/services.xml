@@ -52,6 +52,7 @@
         </service>
         
         <service id="Gisl\GislBlog\Subscriber\BlogCategoryCmsElementResolver">
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <tag name="shopware.cms.data_resolver" />
         </service>
 
@@ -73,6 +74,8 @@
 
         <service id="Gisl\GislBlog\Subscriber\BlogDetailsCmsElementResolver">
             <argument id="gisl_blog_category.repository" type="service"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
+            <argument type="service" id="product.repository"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
 

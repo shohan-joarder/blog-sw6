@@ -85,19 +85,14 @@ Component.register('blog-post-create', {
                 if (result && result.length > 0) {
                     const item = result[0];
 
-                    console.log(item)
+                    if (Object.keys(item.tags).length == 0 ) {
+                        this.item.tags = [];
+                    }
                     this.item = { 
                         // Update the item safely with spread operator
                         ...this.item,
                         ...item,
                     };
-
-                    if(item.tags == null){
-                        this.item = {
-                            ...this.item,
-                            tags:[]
-                        }
-                    }
                 } else {
                     console.warn("Item not found with ID:", itemId);
                     return;
@@ -130,8 +125,6 @@ Component.register('blog-post-create', {
                     };
                     this.languageIdPk = null;
                 }
-
-                console.log(this.item)
 
             } catch (error) {
                 this.createNotificationError({
@@ -189,13 +182,12 @@ Component.register('blog-post-create', {
             itemToSave.tags = this.item.tags;
             itemToSave.categories = this.item.categories;
         
-            // Extract and assign tag names
-            if (this.item.tags) {
+            if (Array.isArray(this.item.tags) && this.item.tags.length > 0) {
                 itemToSave.tags_name = this.tags
                     .filter(tag => this.item.tags.includes(tag.id))
                     .map(tag => tag.name);
             } else {
-                itemToSave.tags_name = []; // Set to empty array if tags are undefined
+                itemToSave.tags_name = []; // Set to empty array if no tags are defined or tags are empty
             }
             
             try {

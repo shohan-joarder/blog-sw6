@@ -1,6 +1,8 @@
 {
     "gisl":{
         "tableContentTitle": "Inhaltsverzeichnis",
-        "categoryTitle":"Kategorie"
+        "categoryTitle":"Kategorie",
+        "emptyResult": "Nein, Artikel gefunden",
+        "relatedBlogTitle": "Verwandter Artikel"
     }
 }

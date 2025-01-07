@@ -14,6 +14,10 @@ Shopware.Service('cmsService').registerCmsElement({
         title:{
             source: 'static',
             value: "Blog"
+        },
+        description:{
+            source: 'static',
+            value: "Blog Description"
         }
     },
 });

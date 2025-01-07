@@ -3,9 +3,7 @@
     {% set currentLanguageId = context.languageId %}
     {% set firstKey = langData|keys|first %}
     {% set firstValue = langData[firstKey] %}
-
     {% set langDataLength = langData|length %}
-
     {% if langDataLength > 1 %}
         {% for lang in langData %}
             {% if currentLanguageId == lang.languageId %}
@@ -13,5 +11,5 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    <a href="#" type="button" class="btn btn-outline-secondary active_category" >{{firstValue.title}}</a>
+    <a href="/{{listingUrl}}?category={{firstValue.fkId}}" type="button" class="btn btn-outline-secondary {% if categoryId == firstValue.fkId %}active_category{% endif %}" >{{firstValue.title}}</a>
 {% endblock %}

@@ -1,8 +1,10 @@
 {% block gisl_element_blog_category %}
+{% set listingUrl = element.data.blogListingUrl %}
+{% set categoryId = element.data.categoryId %}
     <h3 class="blog-page__title test text-center"> {{ element.config["sectionTitle"]["value"] }} </h3>
     {% set categories = element.data.elements %}
      <div class="category-area d-flex justify-content-center align-items-center  flex-wrap gap-2  text-center mb-3">
-        <a href="#" type="button" class="btn btn-outline-secondary active_category" >All Blog</a>
+        <a href="{{listingUrl}}" type="button" class="btn btn-outline-secondary {% if not categoryId %}active_category{% endif %}" >All Blog</a>
         {% for category in categories %}
             {% sw_include '@Storefront/storefront/component/blog-category/gisl-category-item.html.twig' %}
         {% endfor %}
