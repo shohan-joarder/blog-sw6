@@ -18,17 +18,19 @@ use Gisl\GislBlog\Core\Content\GislBlogCategory\GislBlogCategoryDefinition;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Gisl\GislBlog\Subscriber\Struct\BlogDescriptionData;
-
+use Shopware\Core\Framework\Context;
 
 class BlogDescriptionCmsElementResolver extends AbstractCmsElementResolver
 {
     private SystemConfigService $systemConfigService;
     private EntityRepository $mediaRepository;
+    private EntityRepository $categoryRepository;
 
-    public function __construct(SystemConfigService $systemConfigService,EntityRepository $mediaRepository)
+    public function __construct(SystemConfigService $systemConfigService,EntityRepository $mediaRepository,EntityRepository $categoryRepository)
     {
         $this->systemConfigService = $systemConfigService;
         $this->mediaRepository = $mediaRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function getType(): string
@@ -38,12 +40,46 @@ class BlogDescriptionCmsElementResolver extends AbstractCmsElementResolver
 
     public function collect(CmsSlotEntity $slot, ResolverContext $resolverContext): ?CriteriaCollection
     {
-        // Retrieve plugin configuration
-        $pluginConfig = $this->systemConfigService->get('GislBlog.config');
-        $title = $pluginConfig['title'] ?? null;
-        $description = $pluginConfig['description'] ?? null;
+        $request = $resolverContext->getRequest();
 
-        // dd(new BlogShortDescriptionData);
+        $categoryId = $request->query->get("category");
+
+        $title = "";
+        $description = "";
+
+        if($categoryId){
+
+            $categoryCriteria = new Criteria();
+
+            $categoryCriteria->addFilter(
+                new EqualsFilter('id', $categoryId)
+            );
+
+            $categoryCriteria->addAssociations([
+                'translations',
+                'media'
+            ]);
+        
+            // Fetch category collection from the repository
+            $categoryCollection = $this->categoryRepository->search($categoryCriteria, Context::createDefaultContext());
+        
+            // Retrieve the category entities
+            $categories = $categoryCollection->getEntities()->first();
+
+            if($categories){
+
+                if($categories){
+                    $media = $categories?->media;
+                }
+
+                $firstItem = $categories->translations->first();
+
+                $description = $firstItem->description;
+                $title = $firstItem->title;
+            }
+
+        }
+        
 
         // Create the custom Struct object with the data
         $data = new BlogDescriptionData($title, $description);

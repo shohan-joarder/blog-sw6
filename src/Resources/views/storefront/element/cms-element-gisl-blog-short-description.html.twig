@@ -1,8 +1,11 @@
 {% block gisl_element_blog_short_description %}
     {% set element = block.slots.getSlot('content') %}
-     <img src="{{element.data.banner}}" alt="Snow" />
+    {% if element.data.media.url %}
+     <img src="{{element.data.media.url}}" alt="Snow" title="{{ element.data.media.translated["title"] }}" alt="{{ element.data.media.translated["alt"] }}"/>
+    {% endif %}
+    
     <div class="centered banner_content_area">
-        <h1 class="blog-page__title  text-center text-light"> {{ element.translated.config["title"]["value"] }} </h1>
+        <h1 class="blog-page__title  text-center text-light"> {{ element.data.title ?: element.translated.config.title.value }} </h1>
         <p>{{element.translated.config['shortDescription']['value']}}</p>
         <div class="d-flex justify-content-center">
             <a type="button" class="btn btn-sm bg-light" href="{{ element.config["targetId"]["value"] }}">{{ element.config["buttonName"]["value"] }}</a>

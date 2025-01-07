@@ -68,6 +68,7 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         ]);
 
         $criteriaCollection = new CriteriaCollection();
+        
         $criteriaCollection->add('gisl_blog_post', GislBlogPostDefinition::class, $criteria);
 
         return $criteriaCollection;
@@ -178,7 +179,7 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             $tableOfContent = ""; // Set a default value if no description is available
         }
     
-        $relatedProducts = [];
+        $relatedProduct = [];
 
         if($blogPost->tags){
 
@@ -202,6 +203,8 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $slotData->blogCat =$blogCategory; 
         $slotData->blogListingUrl = $listingUrl;
         $slotData->relatedProduct = $relatedProduct;
+        $slotData->media = $blogPost?->media??null;
+
         // Set the data on the slot
         $slot->setData($slotData);
     }

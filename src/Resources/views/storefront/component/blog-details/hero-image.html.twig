@@ -1,6 +1,6 @@
 
 {% if details.banner %}
-    <img src="{{ details.banner }}" alt="{{ details.title }}" />
+    <img src="{{ details.banner }}" title="{{ details.media.translated["title"] }}" alt="{{ details.media.translated["alt"] }}" />
 {% else %}
        {% sw_icon 'placeholder' style {
             'size': 'fluid'

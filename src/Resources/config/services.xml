@@ -63,12 +63,14 @@
         <service id="Gisl\GislBlog\Subscriber\BlogShortDescriptionCmsElementResolver">
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument type="service" id="media.repository" />
+            <argument id="gisl_blog_category.repository" type="service"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
 
         <service id="Gisl\GislBlog\Subscriber\BlogDescriptionCmsElementResolver">
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument type="service" id="media.repository" />
+            <argument id="gisl_blog_category.repository" type="service"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
 

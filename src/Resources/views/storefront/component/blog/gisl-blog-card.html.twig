@@ -18,7 +18,7 @@
         <div class="blog-card">
             <div class="cardImage">
                 {% if article.media.url %}
-                    <img src="{{ article.media.url }}" class="card-img-top" alt="{{ firstValue.title }}" />
+                    <img src="{{ article.media.url }}" class="card-img-top" title="{{ article.media.translated["title"] }}" alt="{{ article.media.translated["alt"] }}" />
                 {% else %}
                     <div class="blog-image-placeholder">
                         {% sw_icon 'placeholder' style {

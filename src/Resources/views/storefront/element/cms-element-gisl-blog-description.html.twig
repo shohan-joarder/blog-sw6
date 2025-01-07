@@ -1,5 +1,4 @@
 {% block gisl_element_blog_description %}
-
-    <h5>{{element.translated.config['title']['value']}}</h5>
-    <p>{{element.translated.config['description']['value']}}</p>
+    <h5>{{element.data.title ? element.data.title :  element.translated.config['title']['value']}}</h5>
+    <p>{{ element.data.description ? element.data.description : element.translated.config['description']['value']}}</p>
 {% endblock %}
