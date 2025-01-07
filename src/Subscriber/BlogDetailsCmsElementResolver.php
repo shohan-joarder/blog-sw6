@@ -217,6 +217,7 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             $criteria->addAssociation('tags');       // Load tags association
             $criteria->addAssociation('seoUrls');    // Load SEO URLs association
             $criteria->addAssociation('media');      // Load media association
+            $criteria->addAssociation('cover');      // Load media association
     
             // Filters to include only relevant products
             $criteria->addFilter(new RangeFilter('stock', ['gt' => 0])); // Only products with stock > 0
