@@ -15,11 +15,13 @@
 
     
     {% block gisl_blog_main_content %}
-        <section class="details_content_wrapper">
+        <section class="details_content_wrapper" id="blogDetailsContentArea">
             <div class="container">
                 {% sw_include '@Storefront/storefront/component/blog-details/main-content.html.twig' %}
             </div>
         </section>
+{#        For hide sticky sidebar #}
+        <div id="endOfBlogContentArea"></div>
     {% endblock %}
 
 
