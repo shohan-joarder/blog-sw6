@@ -25,3 +25,34 @@ document.addEventListener("scroll", () => {
         tableOfContents.style.width = "100%";
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const links = Array.from(document.querySelectorAll("#tableOfContents a")); // Ensure it's an array
+    const headings = Array.from(document.querySelectorAll("[id]")).filter(el =>
+        links.some(link => link.getAttribute("href") === `#${el.id}`)
+    );
+
+    function updateActiveLink() {
+        let currentActive = null;
+
+        headings.forEach((heading, index) => {
+            const bounding = heading.getBoundingClientRect();
+
+            // Check if heading is in the viewport
+            if (bounding.top <= 100 && bounding.bottom >= 100) {
+                currentActive = index;
+            }
+        });
+
+        // Remove "active" class from all links
+        links.forEach(link => link.classList.remove("active_content"));
+
+        // Add "active" class to the current link
+        if (currentActive !== null) {
+            links[currentActive].classList.add("active_content");
+        }
+    }
+
+    // Attach the scroll listener
+    window.addEventListener("scroll", updateActiveLink);
+});
