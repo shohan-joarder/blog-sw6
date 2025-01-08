@@ -29,10 +29,12 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
     private EntityRepository $categoryRepository;
     private SystemConfigService $systemConfigService;
     private EntityRepository $productRepository;
-    public function __construct(EntityRepository $categoryRepository,SystemConfigService $systemConfigService,EntityRepository $productRepository){
+    private EntityRepository $transRepository;
+    public function __construct(EntityRepository $categoryRepository,SystemConfigService $systemConfigService,EntityRepository $productRepository,EntityRepository $transRepository){
         $this->categoryRepository = $categoryRepository;
         $this->systemConfigService = $systemConfigService;
         $this->productRepository = $productRepository;
+        $this->transRepository = $transRepository;
     }
 
     public function getType(): string
@@ -51,9 +53,28 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
 
         $articleId = $request->attributes->get('articleId');
 
-        if (!$articleId) {
+        $slug = $request->attributes->get("slug");
+
+        if (!$slug) {
             return null;
         }
+
+        // Create criteria for querying products
+        $transCriteria = new Criteria();
+
+        $transCriteria->addFilter(new EqualsFilter('slug', $slug));
+
+        // Fetch trans collection from the repository
+        $transCollection = $this->transRepository->search($transCriteria, Context::createDefaultContext());
+
+        // Retrieve the trans entities
+        $transData = $transCollection->getEntities()->first();
+
+        if(!$transData){
+            return null;
+        }
+
+        $articleId = $transData->fkId;
 
         $criteria = new Criteria();
         $criteria->addFilter(
@@ -217,10 +238,18 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
     
             // Create criteria for querying products
             $criteria = new Criteria();
-            $criteria->addAssociation('tags');       // Load tags association
-            $criteria->addAssociation('seoUrls');    // Load SEO URLs association
-            $criteria->addAssociation('media');      // Load media association
-            $criteria->addAssociation('cover');      // Load media association
+            // Set a limit of 5 results
+            $criteria->setLimit(5);
+            // Load necessary associations
+            $criteria->addAssociation('tags');                // Load tags association
+            $criteria->addAssociation('seoUrls');             // Load SEO URLs association
+            $criteria->addAssociation('media');               // Load media association
+            $criteria->addAssociation('cover');               // Load product cover media
+            $criteria->addAssociation('calculatedPrices');    // Load calculated prices
+            $criteria->addAssociation('calculatedPrice');     // Load calculated price
+            $criteria->addAssociation('calculatedCheapestPrice'); // Load calculated cheapest price
+
+            
     
             // Filters to include only relevant products
             $criteria->addFilter(new RangeFilter('stock', ['gt' => 0])); // Only products with stock > 0

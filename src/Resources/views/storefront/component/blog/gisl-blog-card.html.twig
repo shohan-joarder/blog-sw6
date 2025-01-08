@@ -13,8 +13,8 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-
-    <a href="{{ seoUrl('gisl.frontend.blog.detail', {'articleId': article.id}) }}" style="text-decoration: none;">
+    
+    <a href="{{ seoUrl('gisl.frontend.blog.detail', {'slug': firstValue.slug}) }}" style="text-decoration: none;">
         <div class="blog-card">
             <div class="cardImage">
                 {% if article.media.url %}

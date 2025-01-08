@@ -34,7 +34,8 @@
                 "showTag":"Kategorie Etikett",
                 "relatedBlog":"Verwandter Blog",
                 "relatedBlogAlert":"Der zugehörige Inhalt des Blogeintrags wird automatisch vom Element abgerufen.",
-                "recentBlog":"Aktueller Blog"
+                "recentBlog":"Aktueller Blog",
+                "showShare":"Teilen-Button anzeigen"
             }
         },
         "blog":{

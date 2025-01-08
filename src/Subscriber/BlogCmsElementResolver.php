@@ -60,7 +60,7 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
 
         $slotConfig = $slot->getConfig();
         // Add pagination
-        $currentPage = $request->query->getInt('page', 1); // Default to page 1
+        $currentPage = $request->query->getInt('p', 1); // Default to page 1
         $limit = isset($slotConfig["paginationCount"]["value"])?$slotConfig["paginationCount"]["value"]:9;
         $offset = ($currentPage - 1) * $limit;
         $criteria->setLimit($limit);
@@ -81,7 +81,6 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
 
     public function enrich(CmsSlotEntity $slot, ResolverContext $resolverContext, ElementDataCollection $result): void
     {
-
         $gislBlog = $result->get('gisl_blog_post');
         if (!$gislBlog instanceof EntitySearchResult) {
             return;
