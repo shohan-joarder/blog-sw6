@@ -8,7 +8,7 @@ Shopware.Service('cmsService').registerCmsBlock({
     component: 'sw-cms-block-gisl-blog-details',
     previewComponent: 'sw-cms-preview-gisl-blog-details',
     defaultConfig: {
-        marginBottom: '20px',
+        // marginBottom: '20px',
         marginTop: '20px',
         marginLeft: '20px',
         marginRight: '20px',

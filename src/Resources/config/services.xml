@@ -79,6 +79,7 @@
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument type="service" id="product.repository"/>
             <argument type="service" id="gisl_blog_translation.repository"/>
+
             <tag name="shopware.cms.data_resolver" />
         </service>
 

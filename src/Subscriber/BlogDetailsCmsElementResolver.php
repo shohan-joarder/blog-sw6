@@ -24,6 +24,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 
+
 class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
 {
     private EntityRepository $categoryRepository;
@@ -216,7 +217,6 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $publishedAt = $blogPost->publishedAt->format('F j, Y') ?? null;
         $blogCategory = $blogPost->categories;
         $catName = implode(",",$categoryNames);
-        // dd($title, $description, $tableOfContent, $authorName, $authorImage, $blogBanner, $publishedAt);
         // Create a BlogDetailsDataStruct to store the blog details
         $slotData = new BlogDetailsData($title, $description, $tableOfContent, $authorName, $authorImage, $blogBanner, $publishedAt, $allCategory,$blogCategory,$catName);
     
@@ -241,15 +241,12 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             // Set a limit of 5 results
             $criteria->setLimit(5);
             // Load necessary associations
-            $criteria->addAssociation('tags');                // Load tags association
-            $criteria->addAssociation('seoUrls');             // Load SEO URLs association
-            $criteria->addAssociation('media');               // Load media association
-            $criteria->addAssociation('cover');               // Load product cover media
-            $criteria->addAssociation('calculatedPrices');    // Load calculated prices
-            $criteria->addAssociation('calculatedPrice');     // Load calculated price
-            $criteria->addAssociation('calculatedCheapestPrice'); // Load calculated cheapest price
-
-            
+            $criteria->addAssociation('tags');
+            $criteria->addAssociation('seoUrls');
+            $criteria->addAssociation('media');
+            $criteria->addAssociation('cover');
+            $criteria->addAssociation('price');
+            $criteria->addAssociation('priceDetails');
     
             // Filters to include only relevant products
             $criteria->addFilter(new RangeFilter('stock', ['gt' => 0])); // Only products with stock > 0
@@ -273,10 +270,23 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             ));
     
             // Perform the search in the repository
-            $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
+           return $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
 
+            $rp;
+
+            if(count($productEntities)>0){
+                foreach ($productEntities as $key => $product) {
+                    dd($product->getPrice);
+                    $productPrice = $product->price->first();
+                    // dd($productPrice);
+                     // Add calculated prices to product
+                    $product->calculatedPrice = $productPrice;
+                }
+            }
+
+            // dd($rp);
             // Return the resulting product entities
-            return $productEntities;
+            return $rp;
         } catch (\Exception $e) {
             // Log the error for debugging
             $this->logger->error('Error in makeRelatedProduct function: ' . $e->getMessage(), [
