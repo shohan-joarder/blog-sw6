@@ -1,10 +1,8 @@
 {% for product in details.relatedProduct.elements %}
-{% set productPrice = product.price.first %}
      <div class="product-box mb-2 blog_related_product">
         {% sw_include '@Storefront/storefront/component/product/card/box-standard.html.twig' with {
             product: product,
-            layout: 'standard',
-            real:real
+            layout: 'standard'
         } %}
     </div>
 {% endfor %}

@@ -270,8 +270,11 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             ));
     
             // Perform the search in the repository
-           return $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
-
+            //    $productEntities = 
+           return $this->productRepository->search($criteria, $context)->getEntities();
+           
+           dd($productEntities);
+           
             $rp;
 
             if(count($productEntities)>0){
@@ -304,19 +307,23 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $dom = new DOMDocument();
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $content);
         $toc = [];
-    
+
         // Process h2 and h3 tags for the TOC
         foreach (['h2', 'h3'] as $tag) {
             $elements = $dom->getElementsByTagName($tag);
             foreach ($elements as $element) {
                 $textContent = $element->textContent;
                 $id = $element->getAttribute('id') ?: str_replace(' ', '-', strtolower($textContent));
-    
+
                 // Add id to the element if it doesn't have one
                 if (!$element->getAttribute('id')) {
                     $element->setAttribute('id', $id);
                 }
-    
+
+                // Add the class 'section' to the element
+                $existingClass = $element->getAttribute('class');
+                $element->setAttribute('class', trim($existingClass . ' section'));
+
                 // Add this heading to the TOC array
                 $toc[] = [
                     'level' => $tag,
@@ -325,7 +332,7 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
                 ];
             }
         }
-    
+
         // Generate the TOC HTML
         $tocHtml = '';
         foreach ($toc as $heading) {
@@ -333,8 +340,10 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             $tocHtml .= '<a href="#' . $heading['id'] . '">' . $heading['text'] . '</a>';
             $tocHtml .= '</li>';
         }
+
+        // Return modified content and TOC
         $modifiedContent = $dom->saveHTML($dom->getElementsByTagName('body')->item(0));
-        return ['toc'=>$tocHtml,'desc'=>$modifiedContent];
+        return ['toc' => $tocHtml, 'desc' => $modifiedContent];
     }
     
 }
