@@ -87,10 +87,7 @@
             <argument id="gisl_blog_post.repository" type="service"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
-
-        <!-- <service id="Gisl\GislBlog\Subscriber\BlogSubscriber" public="true">
-            <tag name="kernel.event_subscriber" />
-        </service> -->
+        
 
     </services>
 </container>
