@@ -38,7 +38,8 @@
                     </div>
                 {% endif %}
                 {% endif %}
-            {% if ( details.relatedProduct.elements | length >0)%}
+                
+            {% if ( details.relatedProduct | length >0)%}
                 <div class="related_product_area">
                     <h3 class="blog_details_title">{{ 'gisl.relatedProductTitle'|trans }}</h3>
                     <div class="related_product_grid">
