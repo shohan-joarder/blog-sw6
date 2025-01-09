@@ -1,6 +1,39 @@
 // import './snippet/de_DE/gisl.de-DE.json';
 // import './snippet/en_GB/gisl.en-GB.json';
 
+$(document).ready(function () {
+
+    // Highlight the active TOC link based on scrolling
+    $(window).on('scroll', function () {
+        let scrollPosition = $(window).scrollTop();
+        $('#tableOfContents a').each(function () {
+            let section = $($(this).attr('href'));
+            console.log(section,"Section");
+            let sectionTop = section.offset().top - 20; // Adjust offset for better accuracy
+            let sectionBottom = sectionTop + section.outerHeight();
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                $('#tableOfContents a').removeClass('active_content');
+                $(this).addClass('active_content');
+            }
+        });
+    });
+
+    // Smooth scroll and set active class on click
+    $('#tableOfContents a').on('click', function (e) {
+        e.preventDefault();
+        let target = $($(this).attr('href'));
+        $('#tableOfContents a').removeClass('active_content'); // Remove active class from all links
+        $(this).addClass('active_content'); // Add active class to the clicked link
+        $('html, body').animate(
+            {
+                scrollTop: target.offset().top - 10 // Adjust offset to align better
+            },
+            500 // Animation duration (in milliseconds)
+        );
+    });
+});
+
 // Add any other imports (e.g., SCSS or JS)
 document.addEventListener("scroll", () => {
 
@@ -26,33 +59,42 @@ document.addEventListener("scroll", () => {
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const links = Array.from(document.querySelectorAll("#tableOfContents a")); // Ensure it's an array
-    const headings = Array.from(document.querySelectorAll("[id]")).filter(el =>
-        links.some(link => link.getAttribute("href") === `#${el.id}`)
-    );
-
-    function updateActiveLink() {
-        let currentActive = null;
-
-        headings.forEach((heading, index) => {
-            const bounding = heading.getBoundingClientRect();
-
-            // Check if heading is in the viewport
-            if (bounding.top <= 100 && bounding.bottom >= 100) {
-                currentActive = index;
-            }
-        });
-
-        // Remove "active" class from all links
-        links.forEach(link => link.classList.remove("active_content"));
-
-        // Add "active" class to the current link
-        if (currentActive !== null) {
-            links[currentActive].classList.add("active_content");
-        }
-    }
-
-    // Attach the scroll listener
-    window.addEventListener("scroll", updateActiveLink);
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     const links = Array.from(document.querySelectorAll("#tableOfContents a")); // Ensure it's an array
+//     const headings = Array.from(document.querySelectorAll("[id]")).filter(el =>
+//         links.some(link => link.getAttribute("href") === `#${el.id}`)
+//     );
+//
+//     function updateActiveLink() {
+//         let currentActive = null;
+//         let smallestDiff = Infinity;
+//         const offset = 40; // Add space above the heading
+//
+//         headings.forEach((heading, index) => {
+//             const bounding = heading.getBoundingClientRect();
+//
+//             // Check if the heading is within the desired range and not at the bottom of the viewport
+//             if (
+//                 bounding.top >= offset && // Add space
+//                 bounding.top <= window.innerHeight - bounding.height / 2 // Ensure not at the bottom
+//             ) {
+//                 const diff = Math.abs(bounding.top - offset);
+//                 if (diff < smallestDiff) {
+//                     smallestDiff = diff;
+//                     currentActive = index;
+//                 }
+//             }
+//         });
+//
+//         // Remove "active" class from all links
+//         links.forEach(link => link.classList.remove("active_content"));
+//
+//         // Add "active" class to the current link
+//         if (currentActive !== null) {
+//             links[currentActive].classList.add("active_content");
+//         }
+//     }
+//
+//     // Attach the scroll listener
+//     window.addEventListener("scroll", updateActiveLink);
+// });
