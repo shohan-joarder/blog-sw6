@@ -513,8 +513,7 @@ svg {
   }
 }
 .details_content_wrapper .table_content_area {
-  position: sticky;
-  top: 30px;
+
   max-height: 100vh;
   overflow: auto;
 }
@@ -581,10 +580,7 @@ svg {
   line-height: 24px;
   text-decoration: none;
   margin-bottom: 14px;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
 }
 @media all and (max-width: 767px) {
   .details_content_wrapper .table_list li a {
