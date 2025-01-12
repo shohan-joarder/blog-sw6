@@ -1,0 +1,22 @@
+{% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
+
+{% block layout_header_search %}
+    {% if app.request.attributes.get('_route') == 'gisl.frontend.blog.search' %}
+        <div class="collapse"
+             id="searchCollapse">
+            <div class="header-search">
+                <form action="{{ path('gisl.frontend.blog.search') }}"
+                      method="get"
+                      data-search-form="true"
+                      data-url="{{ path('frontend.search.suggest') }}?search="
+                      class="header-search-form">
+                    {% block layout_header_search_input_group %}
+                        {{ parent() }}
+                    {% endblock %}
+                </form>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
