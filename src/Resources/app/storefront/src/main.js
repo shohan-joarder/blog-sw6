@@ -7,14 +7,17 @@ $(document).ready(function () {
     $(window).on('scroll', function () {
         let scrollPosition = $(window).scrollTop();
         $('#tableOfContents a').each(function () {
-            let section = $($(this).attr('href'));
-            console.log(section,"Section");
-            let sectionTop = section.offset().top - 20; // Adjust offset for better accuracy
-            let sectionBottom = sectionTop + section.outerHeight();
+            // Escape the href value
+            let sectionId = $(this).attr('href');
+            let section = $(document.getElementById(sectionId.substring(1))); // Safe selection
+            if (section.length) {
+                let sectionTop = section.offset().top - 20; // Adjust offset for better accuracy
+                let sectionBottom = sectionTop + section.outerHeight();
 
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                $('#tableOfContents a').removeClass('active_content');
-                $(this).addClass('active_content');
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    $('#tableOfContents a').removeClass('active_content');
+                    $(this).addClass('active_content');
+                }
             }
         });
     });
@@ -22,17 +25,21 @@ $(document).ready(function () {
     // Smooth scroll and set active class on click
     $('#tableOfContents a').on('click', function (e) {
         e.preventDefault();
-        let target = $($(this).attr('href'));
-        $('#tableOfContents a').removeClass('active_content'); // Remove active class from all links
-        $(this).addClass('active_content'); // Add active class to the clicked link
-        $('html, body').animate(
-            {
-                scrollTop: target.offset().top - 10 // Adjust offset to align better
-            },
-            500 // Animation duration (in milliseconds)
-        );
+        let targetId = $(this).attr('href');
+        let target = $(document.getElementById(targetId.substring(1))); // Safe selection
+        if (target.length) {
+            $('#tableOfContents a').removeClass('active_content'); // Remove active class from all links
+            $(this).addClass('active_content'); // Add active class to the clicked link
+            $('html, body').animate(
+                {
+                    scrollTop: target.offset().top - 10 // Adjust offset to align better
+                },
+                500 // Animation duration (in milliseconds)
+            );
+        }
     });
 });
+
 
 // Add any other imports (e.g., SCSS or JS)
 document.addEventListener("scroll", () => {
