@@ -1,11 +1,9 @@
-// import './snippet/de_DE/gisl.de-DE.json';
-// import './snippet/en_GB/gisl.en-GB.json';
+import './snippet/de_DE/gisl.de-DE.json';
+import './snippet/en_GB/gisl.en-GB.json';
 
 $(document).ready(function () {
 
-    // Highlight the active TOC link based on scrolling
-    const tableOfContentsEl =$("#tableOfContents");
-    const tableContentOverlayEl =$("#tableContentOverlay");
+
     const updateStickySidebar = ()=>{
         const windowWidth = $(window).width();
 
@@ -64,7 +62,7 @@ $(document).ready(function () {
     $(window).on('scroll', function () {
 
         //Scroll to active table content  functionality
-        if (window?.innerWidth >= 992){
+
             let scrollPosition = $(window).scrollTop();
             $('#tableOfContents a').each(function () {
                 // Escape the href value
@@ -80,7 +78,6 @@ $(document).ready(function () {
                     }
                 }
             });
-        }
 
 
     });
@@ -111,14 +108,15 @@ $(document).ready(function () {
     });
 
     //Show table content for mobile device
+    // Highlight the active TOC link based on scrolling
     const handleHideTableContent = ()=>{
-        tableOfContentsEl.fadeOut()
-        tableContentOverlayEl.fadeOut()
+        $("#tableOfContents").fadeOut()
+        $("#tableContentOverlay").fadeOut()
         $("html,body").css("overflow","auto")
     }
     $("#btnTableOfContents").click(function(){
-        tableOfContentsEl.fadeIn()
-        tableContentOverlayEl.fadeIn()
+        $("#tableOfContents").fadeIn()
+        $("#tableContentOverlay").fadeIn()
         $("html,body").css("overflow","hidden")
     });
     $("#tableContentOverlay").click(function(){
