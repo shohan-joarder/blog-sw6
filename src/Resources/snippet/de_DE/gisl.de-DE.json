@@ -3,6 +3,7 @@
         "tableContentTitle": "Inhaltsverzeichnis",
         "categoryTitle":"Kategorie",
         "emptyResult": "Nein, Artikel gefunden",
-        "relatedBlogTitle": "Verwandter Artikel"
+        "relatedBlogTitle": "Verwandter Artikel",
+        "countTitle":"Blog-Anzahl"
     }
 }

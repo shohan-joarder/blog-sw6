@@ -3,7 +3,6 @@
     <div class="pages">
         <ul class="items pages-items" aria-labelledby="paging-label">
             {% set currentPage = app.request.get('page')|default(1)|int %}
-            {% set totalPages = paginationPages %}
             {% set searchTerm = app.request.get('search')|default('') %}
             
             {# Previous Button #}

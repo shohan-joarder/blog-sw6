@@ -1,7 +1,25 @@
 {% block gisl_element_blog_listing_row %}
     <div class="cms-news-full-listing-row js-listing-wrapper">
 
-        {% set totalPage = (searchResult.total / searchResult.limit)|round(0, 'ceil') %}
+        {% set totalPages = (searchResult.total / searchResult.limit)|round(0, 'ceil') %}
+
+        {% if(totalPages) > 1%}
+            {% block gisl_element_blog_pagination %}
+                <div class="g-4 mt-5">
+                    <div class="blog_count_grid">
+                        <p class="blog_count">
+                            {{ 'gisl.countTitle'|trans }}:  
+                            <span class="active">
+                                {{ ((searchResult.page - 1) * searchResult.limit) + 1 }} to 
+                                {{ searchResult.page * searchResult.limit }} of 
+                                {{ searchResult.total }} items
+                            </span>
+                        </p>
+                        {% sw_include '@Storefront/storefront/component/blog/gisl-pagination.htm.twig' %}
+                    </div>
+                </div>
+            {% endblock %}
+        {% endif %}
 
         {% if searchResult.total > 0 %}
             {% block gisl_element_blog_listing_col %}
@@ -24,6 +42,16 @@
                             content: 'gisl.emptyResult'|trans|sw_sanitize
                         } %}
                     {% endblock %}
+                </div>
+            {% endblock %}
+        {% endif %}
+
+        {% if(totalPages) > 1 %}
+            {% block gisl_element_blog_pagination_bottom %}
+                <div class="g-4 mt-5">
+                    <div class="blog_count_grid">
+                        {% sw_include '@Storefront/storefront/component/blog/gisl-pagination.htm.twig' %}
+                    </div>
                 </div>
             {% endblock %}
         {% endif %}

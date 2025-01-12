@@ -34,7 +34,8 @@
                 "showTag":"Show Tag",
                 "relatedBlog":"Related Blog",
                 "relatedBlogAlert":"The related blog listing content will be automatically fetched by the element.",
-                "recentBlog":"Recent Blog"
+                "recentBlog":"Recent Blog",
+                "showShare":"Show share button"
             }
         },
         "blog":{

@@ -10,7 +10,7 @@
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader" />
             <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader" />
-
+            <argument type="service" id="gisl_blog_translation.repository"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
@@ -78,6 +78,8 @@
             <argument id="gisl_blog_category.repository" type="service"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument type="service" id="product.repository"/>
+            <argument type="service" id="gisl_blog_translation.repository"/>
+
             <tag name="shopware.cms.data_resolver" />
         </service>
 
@@ -85,10 +87,7 @@
             <argument id="gisl_blog_post.repository" type="service"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
-
-        <!-- <service id="Gisl\GislBlog\Subscriber\BlogSubscriber" public="true">
-            <tag name="kernel.event_subscriber" />
-        </service> -->
+        
 
     </services>
 </container>

@@ -1,5 +1,46 @@
 <div class="gdn-blog-posts">
     <div class="pages">
-       
+        <ul class="items pages-items" aria-labelledby="paging-label">
+            {% set currentPage = app.request.get('p')|default(1)%}
+            {% set searchTerm = app.request.get('search')|default('') %}
+            {% set category = app.request.get('category')|default('') %}
+            {# Previous Button #}
+            {% if currentPage > 1 %}
+                <li class="item pages-item-previous">
+                    <a href="{{ app.request.getPathInfo() ~ '?p=' ~ (currentPage - 1) ~ '&search=' ~ searchTerm ~ '&category=' ~ category}}" class="previous" aria-label="Previous">
+                        <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.32775 8.80724C5.44492 8.69004 5.51074 8.5311 5.51074 8.36537C5.51074 8.19964 5.44492 8.0407 5.32775 7.92349L2.234 4.82974L5.32775 1.73599C5.4416 1.61812 5.5046 1.46024 5.50317 1.29637C5.50175 1.13249 5.43602 0.975736 5.32014 0.859856C5.20426 0.743976 5.0475 0.678246 4.88363 0.676822C4.71975 0.675398 4.56188 0.738394 4.444 0.852243L0.908375 4.38787C0.791206 4.50507 0.725383 4.66402 0.725383 4.82974C0.725383 4.99547 0.791206 5.15441 0.908375 5.27162L4.444 8.80724C4.56121 8.92441 4.72015 8.99023 4.88588 8.99023C5.0516 8.99023 5.21055 8.92441 5.32775 8.80724Z" fill="#777777"/>
+                        </svg>
+                        Previous
+                    </a>
+                </li>
+            {% endif %}
+            {# Page Numbers with Ellipsis #}
+            {% for i in 1..totalPages %}
+                {% if i == 1 or i == totalPages or (i >= currentPage - 1 and i <= currentPage + 1) %}
+                    <li class="item {{ i == currentPage ? 'current' : '' }}">
+                        <a href="{{ app.request.getPathInfo() ~ '?p=' ~ i ~ '&search=' ~ searchTerm ~ '&category=' ~ category }}" class="page">
+                            <span>{{ i }}</span>
+                        </a>
+                    </li>
+                {% elseif i == currentPage - 2 or i == currentPage + 2 %}
+                    <li class="item">
+                        <span class="dot">...</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {# Next Button #}
+            {% if currentPage < totalPages %}
+                <li class="item pages-item-next">
+                    <a href="{{ app.request.getPathInfo() ~ '?p=' ~ (currentPage + 1) ~ '&search=' ~ searchTerm ~ '&category=' ~ category }}" class="next" aria-label="Next">
+                        Next
+                        <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.672249 8.80724C0.55508 8.69004 0.489258 8.5311 0.489258 8.36537C0.489258 8.19964 0.55508 8.0407 0.672249 7.92349L3.766 4.82974L0.672249 1.73599C0.5584 1.61812 0.495404 1.46024 0.496828 1.29637C0.498252 1.13249 0.563982 0.975736 0.679862 0.859856C0.795742 0.743976 0.9525 0.678246 1.11637 0.676822C1.28025 0.675398 1.43812 0.738394 1.556 0.852243L5.09162 4.38787C5.20879 4.50507 5.27462 4.66402 5.27462 4.82974C5.27462 4.99547 5.20879 5.15441 5.09162 5.27162L1.556 8.80724C1.43879 8.92441 1.27985 8.99023 1.11412 8.99023C0.948397 8.99023 0.789454 8.92441 0.672249 8.80724Z" fill="#404A3D"/>
+                        </svg>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
     </div>
 </div>

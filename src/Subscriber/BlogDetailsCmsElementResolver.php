@@ -24,15 +24,18 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 
+
 class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
 {
     private EntityRepository $categoryRepository;
     private SystemConfigService $systemConfigService;
     private EntityRepository $productRepository;
-    public function __construct(EntityRepository $categoryRepository,SystemConfigService $systemConfigService,EntityRepository $productRepository){
+    private EntityRepository $transRepository;
+    public function __construct(EntityRepository $categoryRepository,SystemConfigService $systemConfigService,EntityRepository $productRepository,EntityRepository $transRepository){
         $this->categoryRepository = $categoryRepository;
         $this->systemConfigService = $systemConfigService;
         $this->productRepository = $productRepository;
+        $this->transRepository = $transRepository;
     }
 
     public function getType(): string
@@ -51,9 +54,28 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
 
         $articleId = $request->attributes->get('articleId');
 
-        if (!$articleId) {
+        $slug = $request->attributes->get("slug");
+
+        if (!$slug) {
             return null;
         }
+
+        // Create criteria for querying products
+        $transCriteria = new Criteria();
+
+        $transCriteria->addFilter(new EqualsFilter('slug', $slug));
+
+        // Fetch trans collection from the repository
+        $transCollection = $this->transRepository->search($transCriteria, Context::createDefaultContext());
+
+        // Retrieve the trans entities
+        $transData = $transCollection->getEntities()->first();
+
+        if(!$transData){
+            return null;
+        }
+
+        $articleId = $transData->fkId;
 
         $criteria = new Criteria();
         $criteria->addFilter(
@@ -195,7 +217,6 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $publishedAt = $blogPost->publishedAt->format('F j, Y') ?? null;
         $blogCategory = $blogPost->categories;
         $catName = implode(",",$categoryNames);
-        // dd($title, $description, $tableOfContent, $authorName, $authorImage, $blogBanner, $publishedAt);
         // Create a BlogDetailsDataStruct to store the blog details
         $slotData = new BlogDetailsData($title, $description, $tableOfContent, $authorName, $authorImage, $blogBanner, $publishedAt, $allCategory,$blogCategory,$catName);
     
@@ -217,10 +238,15 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
     
             // Create criteria for querying products
             $criteria = new Criteria();
-            $criteria->addAssociation('tags');       // Load tags association
-            $criteria->addAssociation('seoUrls');    // Load SEO URLs association
-            $criteria->addAssociation('media');      // Load media association
-            $criteria->addAssociation('cover');      // Load media association
+            // Set a limit of 5 results
+            $criteria->setLimit(5);
+            // Load necessary associations
+            $criteria->addAssociation('tags');
+            $criteria->addAssociation('seoUrls');
+            $criteria->addAssociation('media');
+            $criteria->addAssociation('cover');
+            $criteria->addAssociation('price');
+            $criteria->addAssociation('priceDetails');
     
             // Filters to include only relevant products
             $criteria->addFilter(new RangeFilter('stock', ['gt' => 0])); // Only products with stock > 0
@@ -244,10 +270,26 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             ));
     
             // Perform the search in the repository
-            $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
+            //    $productEntities = 
+           return $this->productRepository->search($criteria, $context)->getEntities();
+           
+           dd($productEntities);
+           
+            $rp;
 
+            if(count($productEntities)>0){
+                foreach ($productEntities as $key => $product) {
+                    dd($product->getPrice);
+                    $productPrice = $product->price->first();
+                    // dd($productPrice);
+                     // Add calculated prices to product
+                    $product->calculatedPrice = $productPrice;
+                }
+            }
+
+            // dd($rp);
             // Return the resulting product entities
-            return $productEntities;
+            return $rp;
         } catch (\Exception $e) {
             // Log the error for debugging
             $this->logger->error('Error in makeRelatedProduct function: ' . $e->getMessage(), [
@@ -265,19 +307,23 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $dom = new DOMDocument();
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $content);
         $toc = [];
-    
+
         // Process h2 and h3 tags for the TOC
         foreach (['h2', 'h3'] as $tag) {
             $elements = $dom->getElementsByTagName($tag);
             foreach ($elements as $element) {
                 $textContent = $element->textContent;
                 $id = $element->getAttribute('id') ?: str_replace(' ', '-', strtolower($textContent));
-    
+
                 // Add id to the element if it doesn't have one
                 if (!$element->getAttribute('id')) {
                     $element->setAttribute('id', $id);
                 }
-    
+
+                // Add the class 'section' to the element
+                $existingClass = $element->getAttribute('class');
+                $element->setAttribute('class', trim($existingClass . ' section'));
+
                 // Add this heading to the TOC array
                 $toc[] = [
                     'level' => $tag,
@@ -286,7 +332,7 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
                 ];
             }
         }
-    
+
         // Generate the TOC HTML
         $tocHtml = '';
         foreach ($toc as $heading) {
@@ -294,8 +340,10 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             $tocHtml .= '<a href="#' . $heading['id'] . '">' . $heading['text'] . '</a>';
             $tocHtml .= '</li>';
         }
+
+        // Return modified content and TOC
         $modifiedContent = $dom->saveHTML($dom->getElementsByTagName('body')->item(0));
-        return ['toc'=>$tocHtml,'desc'=>$modifiedContent];
+        return ['toc' => $tocHtml, 'desc' => $modifiedContent];
     }
     
 }

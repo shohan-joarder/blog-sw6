@@ -41,10 +41,18 @@ class GislBlogTranslationDefinition extends EntityDefinition
     
             // Foreign Key for Language ID
             (new IdField('languageId', 'languageId'))->addFlags(new Required()),
+
             (new StringField('slug', 'slug')),
+            
             (new StringField('meta_title', 'meta_title')),
+            
             (new LongTextField('meta_description', 'meta_description')),
+            
             (new LongTextField('meta_keywords', 'meta_keywords')),
+
+            (new StringField('meta_title', 'metaTitle')),
+            (new LongTextField('meta_description', 'metaDescription')),
+            (new LongTextField('meta_keywords', 'metaKeywords')),
     
             // Foreign Key for Blog or Category (Polymorphic)
             (new IdField('fkId', 'fkId'))->addFlags(new Required()),
@@ -56,6 +64,8 @@ class GislBlogTranslationDefinition extends EntityDefinition
             (new StringField('title', 'title'))->addFlags(new Required()),
     
             // Short Description
+            (new LongTextField('short_description', 'short_description')),
+            
             (new LongTextField('short_description', 'shortDescription')),
     
             // Description
