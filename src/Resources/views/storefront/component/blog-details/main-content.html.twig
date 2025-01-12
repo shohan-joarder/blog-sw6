@@ -24,13 +24,16 @@
         <div class="blog_details_content_area" id="content" >
             {{ details.description|raw }}
         </div>
-        <ul class="social_share_list">
-           {% sw_include '@Storefront/storefront/component/blog-details/share-now.html.twig' %}
-        </ul>
+        {% if element.config["showShare"]["value"] %}
+            <ul class="social_share_list">
+            {% sw_include '@Storefront/storefront/component/blog-details/share-now.html.twig' %}
+            </ul>
+        {% endif %}
     </div>
     
-    <div class="col-lg-3">
+ <div class="col-lg-3">
         <div class="details_right_area" id="detailsRightArea">
+            {% if element.config["showCategory"]["value"] %}
             {% if ( details.allCat | length >0)%}
                 <div class="category">
                     <h3 class="blog_details_title">{{ 'gisl.categoryTitle'|trans }}</h3>
@@ -43,14 +46,17 @@
                     </div>
                 </div>
             {% endif %}
+            {% endif %}
+                
             {% if ( details.relatedProduct | length >0)%}
                 <div class="related_product_area">
                     <h3 class="blog_details_title">{{ 'gisl.relatedProductTitle'|trans }}</h3>
                     <div class="related_product_grid">
-{#                        {% sw_include '@Storefront/storefront/component/blog-details/related-product.html.twig' %}#}
+                        {% sw_include '@Storefront/storefront/component/blog-details/related-product.html.twig' %}
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
+  
 </div>

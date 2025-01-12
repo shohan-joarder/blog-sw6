@@ -3,6 +3,7 @@
         "tableContentTitle": "Table of Content",
         "categoryTitle":"Category",
         "emptyResult": "No, item found",
-        "relatedProductTitle": "Related Products"
+        "relatedProductTitle": "Related Products",
+        "countTitle":"Blog Count"
     }
 }

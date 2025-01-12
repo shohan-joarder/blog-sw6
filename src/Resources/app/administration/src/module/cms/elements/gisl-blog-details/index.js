@@ -14,6 +14,10 @@ Shopware.Service('cmsService').registerCmsElement({
         showTag: {
             source: 'static',
             value: true,
+        },
+        showShare: {
+            source: 'static',
+            value: true,
         }
     }
 });
