@@ -1,8 +1,20 @@
 @import "components/section-title";
 
+
 img,
 svg {
   max-width: 100%;
+}
+.overlay{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background: #dbdbdb6e;
+  backdrop-filter: blur(2px);
 }
 .category-area {
   .btn {
@@ -499,6 +511,14 @@ svg {
   img {
     max-width: 100%;
   }
+  .table_content_btn{
+    border: none;
+    padding: 0;
+    background: transparent;
+    svg{
+      width: 22px;
+    }
+  }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .details_content_wrapper {
@@ -510,10 +530,26 @@ svg {
   .details_content_wrapper {
     transition: 0.5s;
     margin-top: 40px;
+    .table_content_area{
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 20px 12px;
+      background: white;
+      height: 100vh;
+      width: 70vw;
+      z-index: 50;
+      display: none;
+    }
+    .blog_details_title{
+      &:after
+      {
+        display: none;
+      }
+    }
   }
 }
 .details_content_wrapper .table_content_area {
-
   max-height: 100vh;
   overflow: auto;
 }
@@ -538,14 +574,13 @@ svg {
 @media (min-width: 768px) and (max-width: 991px) {
   .details_content_wrapper .blog_details_title {
     transition: 0.5s;
-    font-size: 20px;
     padding-bottom: 10px;
   }
 }
 @media all and (max-width: 767px) {
   .details_content_wrapper .blog_details_title {
     transition: 0.5s;
-    font-size: 18px;
+    font-size: 20px;
     padding-bottom: 6px;
   }
 }
