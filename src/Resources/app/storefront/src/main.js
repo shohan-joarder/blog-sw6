@@ -1,14 +1,25 @@
-import './snippet/de_DE/gisl.de-DE.json';
-import './snippet/en_GB/gisl.en-GB.json';
+// import './snippet/de_DE/gisl.de-DE.json';
+// import './snippet/en_GB/gisl.en-GB.json';
 
 $(document).ready(function () {
 
+    const $progressBar = $("#progressBar");
+
+    const updateScrollProgress = () => {
+        const scrollTop = $(window).scrollTop(); // Current vertical position
+        const docHeight = $(document).height(); // Total document height
+        const winHeight = $(window).height(); // Height of the viewport
+
+        // Calculate the scroll percentage
+        const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+
+        // Update the progress bar width
+        $progressBar.css("width", `${scrollPercent}%`);
+    };
 
     const updateStickySidebar = ()=>{
-        const windowWidth = $(window).width();
-
-        if (windowWidth >= 992) {
             $(window).on("scroll", function () {
+                if(window.innerWidth >= 992){
                 //Table content and right side stikcy
                 const $tableOfContents = $("#tableOfContents");
                 const $endOfBlogContentEl = $("#endOfBlogContentArea");
@@ -52,17 +63,15 @@ $(document).ready(function () {
                         width: "100%",
                     });
                 }
-
+                }
             })
 
-        }
     }
     updateStickySidebar()
 
     $(window).on('scroll', function () {
 
         //Scroll to active table content  functionality
-
             let scrollPosition = $(window).scrollTop();
             $('#tableOfContents a').each(function () {
                 // Escape the href value
@@ -79,6 +88,9 @@ $(document).ready(function () {
                 }
             });
 
+            if($progressBar){
+                updateScrollProgress()
+            }
 
     });
 
@@ -86,6 +98,7 @@ $(document).ready(function () {
     $(window).on("resize", function () {
         updateStickySidebar()
     });
+
 
     // Smooth scroll and set active class on click
     $('#tableOfContents a').on('click', function (e) {
