@@ -270,25 +270,24 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
             ));
     
             // Perform the search in the repository
-            //    $productEntities = 
-           return $this->productRepository->search($criteria, $context)->getEntities();
+           $productEntities = $this->productRepository->search($criteria, $context)->getEntities();
            
-           dd($productEntities);
-           
-            $rp;
+            $rp =[];
 
             if(count($productEntities)>0){
                 foreach ($productEntities as $key => $product) {
-                    dd($product->getPrice);
-                    $productPrice = $product->price->first();
-                    // dd($productPrice);
+                    $firstPrice = $product->price->first();
+                    $productPrice = json_encode($firstPrice);
+                    $jsonObj = json_decode($productPrice);
+                    $firstPrice->unitPrice = $jsonObj->net;
+                    $firstPrice->totalPrice = $jsonObj->gross;
+                    $firstPrice->quantity = 1;
                      // Add calculated prices to product
-                    $product->calculatedPrice = $productPrice;
+                    $product->calculatedPrice = $firstPrice;
+
+                    $rp[$key] = $product;
                 }
             }
-
-            // dd($rp);
-            // Return the resulting product entities
             return $rp;
         } catch (\Exception $e) {
             // Log the error for debugging

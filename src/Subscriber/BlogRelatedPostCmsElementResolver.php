@@ -19,9 +19,11 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 class BlogRelatedPostCmsElementResolver extends AbstractCmsElementResolver
 {
     private EntityRepository $blogRepository;
-
-    public function __construct(EntityRepository $blogRepository){
+    private EntityRepository $transRepository;
+    public function __construct(EntityRepository $blogRepository,EntityRepository $transRepository){
         $this->blogRepository = $blogRepository;
+        $this->transRepository = $transRepository;
+
     }
 
     public function getType(): string
@@ -38,11 +40,27 @@ class BlogRelatedPostCmsElementResolver extends AbstractCmsElementResolver
             return null;
         }
 
-        $articleId = $request->attributes->get('articleId');
+        $slug = $request->attributes->get("slug");
 
-        if (!$articleId) {
+        if (!$slug) {
             return null;
         }
+
+        $transCriteria = new Criteria();
+
+        $transCriteria->addFilter(new EqualsFilter('slug', $slug));
+
+        // Fetch trans collection from the repository
+        $transCollection = $this->transRepository->search($transCriteria, Context::createDefaultContext());
+
+        // Retrieve the trans entities
+        $transData = $transCollection->getEntities()->first();
+
+        if(!$transData){
+            return null;
+        }
+
+        $articleId = $transData->fkId;
 
         $findBlogCriteria =  new Criteria();
 
