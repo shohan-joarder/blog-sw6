@@ -1,5 +1,13 @@
 <div class="row">
     <div class="col-lg-3">
+        <div class="d-lg-none">
+            <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 border-bottom pb-2 mb-4"    >
+                <h3 class="blog_details_title border-0 p-0 m-0">{{ 'gisl.tableContentTitle'|trans }}</h3>
+        <button type="button" class="table_content_btn " id="btnTableOfContents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        </button>
+            </div>
+        </div>
         <div class="table_content_area"  id="tableOfContents">
             <h3 class="blog_details_title">{{ 'gisl.tableContentTitle'|trans }}</h3>
             <ul class="table_list">
@@ -9,6 +17,7 @@
                 {% endif %}
             </ul>
         </div>
+        <div class="overlay" id="tableContentOverlay"></div>
     </div>
     
     <div class="col-lg-6">

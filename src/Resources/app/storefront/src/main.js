@@ -4,6 +4,8 @@
 $(document).ready(function () {
 
     // Highlight the active TOC link based on scrolling
+    const tableOfContentsEl =$("#tableOfContents");
+    const tableContentOverlayEl =$("#tableContentOverlay");
     const updateStickySidebar = ()=>{
         const windowWidth = $(window).width();
 
@@ -62,21 +64,25 @@ $(document).ready(function () {
     $(window).on('scroll', function () {
 
         //Scroll to active table content  functionality
-        let scrollPosition = $(window).scrollTop();
-        $('#tableOfContents a').each(function () {
-            // Escape the href value
-            let sectionId = $(this).attr('href');
-            let section = $(document.getElementById(sectionId.substring(1))); // Safe selection
-            if (section.length) {
-                let sectionTop = section.offset().top - 42; // Adjust offset for better accuracy
-                let sectionBottom = sectionTop + section.outerHeight();
+        if (window?.innerWidth >= 992){
+            let scrollPosition = $(window).scrollTop();
+            $('#tableOfContents a').each(function () {
+                // Escape the href value
+                let sectionId = $(this).attr('href');
+                let section = $(document.getElementById(sectionId.substring(1))); // Safe selection
+                if (section.length) {
+                    let sectionTop = section.offset().top - 42; // Adjust offset for better accuracy
+                    let sectionBottom = sectionTop + section.outerHeight();
 
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    $('#tableOfContents a').removeClass('active_content');
-                    $(this).addClass('active_content');
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        $('#tableOfContents a').removeClass('active_content');
+                        $(this).addClass('active_content');
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
     });
 
     // Ensure responsiveness on window resize
@@ -98,7 +104,25 @@ $(document).ready(function () {
                 },
                 500 // Animation duration (in milliseconds)
             );
+            if(window.innerWidth < 992){
+                handleHideTableContent()
+            }
         }
+    });
+
+    //Show table content for mobile device
+    const handleHideTableContent = ()=>{
+        tableOfContentsEl.fadeOut()
+        tableContentOverlayEl.fadeOut()
+        $("html,body").css("overflow","auto")
+    }
+    $("#btnTableOfContents").click(function(){
+        tableOfContentsEl.fadeIn()
+        tableContentOverlayEl.fadeIn()
+        $("html,body").css("overflow","hidden")
+    });
+    $("#tableContentOverlay").click(function(){
+        handleHideTableContent()
     });
 
 });
