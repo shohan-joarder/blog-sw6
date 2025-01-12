@@ -5,7 +5,7 @@
     {% block blog_post_smart_bar_actions %}
         <template #smart-bar-actions>
             <span v-if="item.id">
-                <languages  :languageId="languageId" @change="handleLanguageChange" />
+                <languages  :languageId="languageId" @change="handleLanguageChange" :isDisable="!item.id" />
             </span>
             <sw-button 
                 :disabled="true" 
@@ -60,6 +60,7 @@
                 :label-property="'name'"
                 :value-property="'id'"
                 placeholder="Select category"
+                :required="true" 
                 >
             </sw-multi-select>   
 

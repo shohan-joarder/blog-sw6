@@ -94,6 +94,9 @@ Component.register('blog-post-create', {
                     if(Object.keys(item.tags).length === 0){
                         this.item.tags = [];
                     }
+                    if(Object.keys(item.categories).length === 0){
+                        this.item.categories = [];
+                    }
                     
                 } else {
                     console.warn("Item not found with ID:", itemId);
@@ -152,7 +155,6 @@ Component.register('blog-post-create', {
             this.loading = false;
             
             if (errorMessage != null) {
-                console.log("Error msg",errorMessage)
                 this.createNotificationError({
                     title: "Duplicate Slug",
                     message:errorMessage,
@@ -305,6 +307,13 @@ Component.register('blog-post-create', {
             // Check if each required field is not empty
             if (!this.item.title) {
                 this.errors.title = "Title is required";
+                isValid = false;
+            } else {
+                this.errors.title = null;
+            }
+
+            if (!this.item.categories) {
+                this.errors.title = "Please choose a category";
                 isValid = false;
             } else {
                 this.errors.title = null;

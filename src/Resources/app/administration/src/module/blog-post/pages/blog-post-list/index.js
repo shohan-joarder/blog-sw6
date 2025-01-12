@@ -86,17 +86,18 @@ Component.register('blog-post-list', {
         },
         async onDeleteItem() {
             const itemId = this.postId;
-        
             if (!itemId) {
                 this.createNotificationError({
                     title: this.$tc("gisl.general.error"),
                     message: this.$tc("gisl.general.common_error_message"),
                 });
+                
                 return;
             }
         
             try {
-                const repository = this.itemRepository;
+                // const repository = this.itemRepository;
+                const repository = this.repositoryFactory.create(this.entity);
                 
                 const languageRepository = this.repositoryFactory.create('gisl_blog_translation');
         
@@ -113,14 +114,9 @@ Component.register('blog-post-list', {
                 criteria.addFilter(Shopware.Data.Criteria.equals('fkId', itemId));
         
                 const translations = await languageRepository.search(criteria, Shopware.Context.api);
-        
-                if (translations.total > 0) {
-                    // Use `Promise.all` for efficient deletion of translations
-                    await Promise.all(
-                        translations.map((translation) =>
-                            languageRepository.delete(translation.id, Shopware.Context.api)
-                        )
-                    );
+                
+                for (const translation of translations) {
+                    await languageRepository.delete(translation.id, Shopware.Context.api);
                 }
         
                 // Delete the main item
@@ -159,9 +155,10 @@ Component.register('blog-post-list', {
     created() {
         this.loadItems();
     },
-    
-    itemRepository() {
-        return this.repositoryFactory.create(this.entity);
+    computed:{
+        itemRepository() {
+            return this.repositoryFactory.create(this.entity);
+        },
     },
 
     mounted() {
