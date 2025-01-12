@@ -16,6 +16,16 @@ svg {
   background: #dbdbdb6e;
   backdrop-filter: blur(2px);
 }
+.progress_bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 5px;
+  background-color: #007bff;
+  z-index: 9999;
+  transition: width 0.1s ease;
+}
 .category-area {
   .btn {
     color: #212121;

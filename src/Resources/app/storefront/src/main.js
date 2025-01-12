@@ -1,13 +1,9 @@
-import './snippet/de_DE/gisl.de-DE.json';
-import './snippet/en_GB/gisl.en-GB.json';
+// import './snippet/de_DE/gisl.de-DE.json';
+// import './snippet/en_GB/gisl.en-GB.json';
 
 $(document).ready(function () {
 
-
     const updateStickySidebar = ()=>{
-        const windowWidth = $(window).width();
-
-        if (windowWidth >= 992) {
             $(window).on("scroll", function () {
                 //Table content and right side stikcy
                 const $tableOfContents = $("#tableOfContents");
@@ -55,7 +51,6 @@ $(document).ready(function () {
 
             })
 
-        }
     }
     updateStickySidebar()
 
