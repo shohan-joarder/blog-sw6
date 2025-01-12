@@ -72,7 +72,6 @@ $(document).ready(function () {
     $(window).on('scroll', function () {
 
         //Scroll to active table content  functionality
-
             let scrollPosition = $(window).scrollTop();
             $('#tableOfContents a').each(function () {
                 // Escape the href value
@@ -89,6 +88,9 @@ $(document).ready(function () {
                 }
             });
 
+            if($progressBar){
+                updateScrollProgress()
+            }
 
     });
 
@@ -97,8 +99,6 @@ $(document).ready(function () {
         updateStickySidebar()
     });
 
-    // Update progress bar on scroll
-    $(window).on("scroll", updateScrollProgress);
 
     // Smooth scroll and set active class on click
     $('#tableOfContents a').on('click', function (e) {

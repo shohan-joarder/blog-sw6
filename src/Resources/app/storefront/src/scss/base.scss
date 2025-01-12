@@ -22,7 +22,7 @@ svg {
   left: 0;
   width: 0;
   height: 5px;
-  background-color: #007bff;
+  background-color: $sw-color-brand-primary;
   z-index: 9999;
   transition: width 0.1s ease;
 }
@@ -599,18 +599,23 @@ svg {
   li{
     position: relative;
     list-style: none;
-    &:before{
-      content: "";
-      position: absolute;
-      top: 6px;
-      left: -18px;
-      width: 10px;
-      height: 10px;
-      background: #212121;
-      border-radius: 50%;
+    a{
+      position: relative;
+      &:before{
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: -18px;
+        width: 10px;
+        height: 10px;
+        background: #212121;
+        border-radius: 50%;
+      }
     }
+
   }
   .active_content{
+    color: $sw-color-brand-primary !important;
     &:before{
       background: $sw-color-brand-primary !important;
     }
@@ -812,10 +817,10 @@ svg {
 //   }
 // }
 
-.active_content,
-.active_content a {
-  color: firebrick !important;
-}
+//.active_content,
+//.active_content a {
+//  color: firebrick !important;
+//}
 
 
 .product_img_primary {
