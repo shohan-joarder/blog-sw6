@@ -1,0 +1,48 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+{% block base_content  %}
+{% if searchTerm != '' %}
+    
+    <h1 class="search-headline text-center mb-4">  {{ 'gisl.searchTitle'|trans }}  "{{searchTerm}}"</h1>
+
+{% endif %}
+
+{% if(totalPages) > 1%}
+    {% block gisl_element_search_blog_pagination_top %}
+        <div class="g-4 mt-5">
+            <div class="blog_count_grid">
+                {% sw_include '@Storefront/storefront/component/blog/gisl-pagination.htm.twig' %}
+            </div>
+        </div>
+    {% endblock %}
+{% endif %}
+
+
+{% if items|length > 0 %}
+    {% block gisl_search_element_blog_listing_col %}
+        <div class="row mb-3">
+            {% for article in items %}
+                {% block gisl_element_blog_search_listing_box %}
+                    <div class="col-lg-4 col-md-6">
+                        {% sw_include '@Storefront/storefront/component/blog/gisl-blog-card.html.twig' with { item: item } %}
+                    </div>
+                {% endblock %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% if(totalPages) > 1%}
+        {% block gisl_element_search_blog_pagination_bottom %}
+            <div class="g-4 mb-5">
+                <div class="blog_count_grid">
+                    {% sw_include '@Storefront/storefront/component/blog/gisl-pagination.htm.twig' %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endif %}
+{% else %}
+
+{% endif %}
+
+
+
+{% endblock %}

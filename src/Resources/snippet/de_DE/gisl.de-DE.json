@@ -4,6 +4,7 @@
         "categoryTitle":"Kategorie",
         "emptyResult": "Nein, Artikel gefunden",
         "relatedBlogTitle": "Verwandter Artikel",
-        "countTitle":"Blog-Anzahl"
+        "countTitle":"Blog-Anzahl",
+        "searchTitle":"Blog-Suchergebnisse für"
     }
 }
