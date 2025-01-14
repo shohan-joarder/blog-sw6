@@ -306,23 +306,26 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
         $dom = new DOMDocument();
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $content);
         $toc = [];
-
+    
         // Process h2 and h3 tags for the TOC
         foreach (['h2', 'h3'] as $tag) {
             $elements = $dom->getElementsByTagName($tag);
             foreach ($elements as $element) {
                 $textContent = $element->textContent;
+    
+                // Generate a sanitized id by removing special characters and spaces
                 $id = $element->getAttribute('id') ?: str_replace(' ', '-', strtolower($textContent));
-
+                $id = preg_replace('/[^a-zA-Z0-9_-]/', '', $id); // Remove special characters
+    
                 // Add id to the element if it doesn't have one
                 if (!$element->getAttribute('id')) {
                     $element->setAttribute('id', $id);
                 }
-
+    
                 // Add the class 'section' to the element
                 $existingClass = $element->getAttribute('class');
                 $element->setAttribute('class', trim($existingClass . ' section'));
-
+    
                 // Add this heading to the TOC array
                 $toc[] = [
                     'level' => $tag,
@@ -331,18 +334,19 @@ class BlogDetailsCmsElementResolver extends AbstractCmsElementResolver
                 ];
             }
         }
-
+    
         // Generate the TOC HTML
         $tocHtml = '';
         foreach ($toc as $heading) {
             $tocHtml .= '<li class="toc-' . $heading['level'] . '">';
-            $tocHtml .= '<a href="#' . $heading['id'] . '">' . $heading['text'] . '</a>';
+            $tocHtml .= '<a href="#' . htmlspecialchars($heading['id']) . '">' . htmlspecialchars($heading['text']) . '</a>';
             $tocHtml .= '</li>';
         }
-
+    
         // Return modified content and TOC
         $modifiedContent = $dom->saveHTML($dom->getElementsByTagName('body')->item(0));
         return ['toc' => $tocHtml, 'desc' => $modifiedContent];
     }
+    
     
 }

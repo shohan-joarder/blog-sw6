@@ -650,6 +650,8 @@ svg {
 }
 .details_content_wrapper .details_right_area {
   position: relative;
+  overflow: auto;
+  max-height: 100vh;
 }
 .details_content_wrapper .details_right_area::before {
   content: "";

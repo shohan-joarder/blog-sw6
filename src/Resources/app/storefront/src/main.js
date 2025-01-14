@@ -1,5 +1,4 @@
-// import './snippet/de_DE/gisl.de-DE.json';
-// import './snippet/en_GB/gisl.en-GB.json';
+import "./search/index.js"
 
 $(document).ready(function () {
 
