@@ -406,6 +406,10 @@ svg {
       margin-top: 0;
     }
   }
+  .details_content_wrapper .details_right_area {
+    overflow: auto;
+    max-height: 100vh;
+  }
 }
 
 //Blog Details Page
