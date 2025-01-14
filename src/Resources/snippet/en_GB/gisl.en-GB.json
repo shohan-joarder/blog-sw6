@@ -4,6 +4,7 @@
         "categoryTitle":"Category",
         "emptyResult": "No, item found",
         "relatedProductTitle": "Related Products",
-        "countTitle":"Blog Count"
+        "countTitle":"Blog Count",
+        "searchTitle":"Blog search results for"
     }
 }
